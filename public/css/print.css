@@ -1,0 +1,48 @@
+
+tr, thead {
+    page-break-inside: initial;
+}
+
+td, th {
+    page-break-inside: avoid;
+}
+
+thead {
+    display: table-header-group;
+}
+
+@media print {
+    header, nav, footer, form, button, .btn, .no-print {
+        display: none;
+    }
+
+    article {
+        position: initial !important;
+    }
+
+    div.content {
+        width: 80% !important;
+    }
+
+    body {
+        font-family:  'B Homa';
+        font-size: 130%;
+        font-weight: 400;
+    }
+
+    td {
+        padding: 15px !important;
+    }
+
+    th {
+        padding: 15px !important;
+    }
+
+    table {
+        border-color: black;
+    }
+}
+
+@page {
+    size: landscape;
+}

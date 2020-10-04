@@ -1,0 +1,227 @@
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+div.alert {
+    font-size: 85%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+.input-group {
+    margin-top: 15px !important;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    margin-bottom: 30px;
+}
+
+.title {
+    margin-right: 50px;
+}
+
+ul.actions {
+    padding: 0;
+
+    li {
+        list-style: none;
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-left: 10px;
+
+            &::after {
+                content: '|';
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.menu {
+    background-color: #fff;
+    width: 150px;
+    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 100;
+    display: none;
+  
+    .menu-options {
+        font-size: 90%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+  
+        .menu-option {
+            font-weight: 500;
+            font-size: 14px;
+            padding: 5px;
+            cursor: pointer;
+
+            &:not(:last-child ) {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+    
+            &:hover {
+                background: rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    direction: rtl !important;
+    font-family: 'Shabnam FD', 'Samim', 'B Yekan';
+    color: #333;
+    text-align: right;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr 2fr 8fr 1fr;
+    grid-template-rows: 70px auto 50px;
+
+    header {
+        position: relative;
+        grid-column: 1 / span 4;
+        grid-row: 1 / span 1;
+        background-color: white;
+        z-index: 6;
+        font-family: 'Shabnam FD';
+        font-weight: bold;
+
+        p {
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%,-50%);
+            font-size: 130%;
+        }
+
+        .user_info {
+            height: fit-content;
+            width: 260px;
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translate(0, -50%);
+
+            ul {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    display: inline-block;
+                    
+                    &:not(:last-child) {
+                        margin-left: 10px;
+                    }
+                }
+            }
+
+        }
+    }
+
+    nav {
+        position: relative;
+        grid-column: 2 / span 1;
+        grid-row: 2 / span 1;
+        border-radius: 2px;
+        border-left: 1px solid rgba($color: #000000, $alpha: .2);
+        box-shadow: -8px 0px 10px rgba(0,0,0,.2);
+        z-index: 1;
+
+        ul {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%,-50%);
+            // background-color: lightyellow;
+
+            li {
+                list-style-type: none;
+                font-size: 20px;
+                transform: scale(1);
+                backface-visibility: hidden;
+                transition: transform .2s ease-in-out;
+
+                a {
+                    text-decoration: none;
+                    color: inherit;
+
+                    &:hover {
+                        text-decoration: none;
+                        color: inherit;
+                    }
+                }
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 25px;
+                }
+            }
+        }
+    }
+
+    article {
+        position: relative;
+        grid-column: 3 / span 1;
+        grid-row: 2 / span 1;
+        
+        div.content {
+            width: 88%;
+            height: 88%;
+            overflow: scroll;
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            transform: translate(50%,-50%);
+        }
+    }
+
+    footer {
+        grid-column: 1 / span 14;
+        grid-row: 3 / span 1;
+        background-color: white;
+        z-index: 7;
+    }
+}
+
+.input-group {
+    margin-top: 30px;
+
+    .input-group-append {
+        width: 140px !important;
+
+        .input-group-text {
+            width: 100%;
+            border-radius: 0px 5px 5px 0px !important;
+        }
+
+    }
+
+    .form-control {
+        border-radius: 5px 0px 0px 5px !important;
+    }
+}
