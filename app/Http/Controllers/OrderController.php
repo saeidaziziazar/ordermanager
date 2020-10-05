@@ -60,6 +60,7 @@ class OrderController extends Controller
                 $orders = $this->getOrders($request);
             }
         } else {
+            // dd($request->all());
             $orders = $this->getOrders($request);
         }        
 
@@ -131,11 +132,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $this->authorize('create', Order::class);
 
         $this->validate($request,
             [
-                'ordernum' => 'required|unique:orders,order_num',
+                // 'ordernum' => 'required|unique:orders,order_num',
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
@@ -474,6 +476,7 @@ class OrderController extends Controller
         $end = $request->input('end');
         $transporter = $request->input('transporter');
         $owner = $request->input('owner');
+    
         if (Auth::user()->transportation_id) {
             $certain = ['1'];
         } else {

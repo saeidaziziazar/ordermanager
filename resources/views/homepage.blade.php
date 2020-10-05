@@ -20,7 +20,7 @@
 <body>
     @yield('contextmenu')
     <header>
-        <p>سیستم مدیریت حواله های باربری</p>
+        <h3 class="title">سیستم مدیریت حواله های باربری</h3>
         @if (Auth::check())
             <div class="user_info">
                 <ul>
@@ -45,6 +45,17 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+
+            <!-- financial year select box -->
+            <div class="financial_year">
+                <h6>سال مالی</h6>
+
+                {{ dd(App\Order::all()) }}
+                <select name="year" class="form-control" form="message" style="width:fit-content;margin:0 10px 0 10px">
+                    <option value="0">1398-1399</option>
+                    <option value="1" selected>1399-1400</option>
+                </select>
             </div>
         @endif
     </header>

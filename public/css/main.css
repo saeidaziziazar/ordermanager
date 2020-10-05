@@ -99,12 +99,24 @@ body header {
   font-family: "Shabnam FD";
   font-weight: bold;
 }
-body header p {
+body header h3.title {
   position: absolute;
   top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
+  right: 25%;
+  transform: translate(0%, -50%);
   font-size: 130%;
+}
+body header .financial_year {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(0, -50%);
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+body header .financial_year h6 {
+  margin: 0%;
 }
 body header .user_info {
   height: fit-content;
