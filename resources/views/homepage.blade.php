@@ -48,14 +48,17 @@
             </div>
 
             <!-- financial year select box -->
+            <?php 
+                $years = App\Year::orderBy('id', 'desc')->get();
+
+                foreach($years as $year) {
+                    $formatted_year[$year->id] = $year->name;
+                }
+            ?>
             <div class="financial_year">
                 <h6>سال مالی</h6>
 
-                {{ dd(App\Order::all()) }}
-                <select name="year" class="form-control" form="message" style="width:fit-content;margin:0 10px 0 10px">
-                    <option value="0">1398-1399</option>
-                    <option value="1" selected>1399-1400</option>
-                </select>
+                {!! Form::select('year', $formatted_year, null, ['class' => 'form-control', 'form' => 'create_order', 'style' => 'width:fit-content;margin:0 10px 0 10px']); !!}
             </div>
         @endif
     </header>

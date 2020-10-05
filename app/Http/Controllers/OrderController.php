@@ -12,6 +12,7 @@ use App\User;
 use Morilog\Jalali\Jalalian;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -132,12 +133,15 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $this->authorize('create', Order::class);
 
         $this->validate($request,
             [
-                // 'ordernum' => 'required|unique:orders,order_num',
+                'ordernum' => [
+                    'required',
+                    Rule::unique('orders', 'order_num')
+                ],
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
