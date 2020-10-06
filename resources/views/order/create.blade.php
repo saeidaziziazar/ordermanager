@@ -78,6 +78,7 @@
                     {!! Form::text('description', '', ['class' => 'form-control']); !!}
                 </div>
             </div>
+            {!! Form::hidden('start', '1399/07/01') !!}
             <div class="row" style="margin:0;padding:5px">
                 <div class="form-group">
                     {!! Form::submit('ایجاد حواله و قطعی کردن', ['class' => 'btn btn-success', 'name' => 'create']); !!}

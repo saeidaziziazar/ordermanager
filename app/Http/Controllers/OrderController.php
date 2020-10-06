@@ -133,7 +133,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        // dd($request->input('date') >= $request->input('start'));
         $this->authorize('create', Order::class);
 
         $this->validate($request,
@@ -142,7 +142,8 @@ class OrderController extends Controller
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
-                'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/',
+                // 'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/',
+                'date' => 'gt:start',
                 'owner' => 'required',
             ], 
             [
