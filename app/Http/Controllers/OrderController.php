@@ -138,10 +138,7 @@ class OrderController extends Controller
 
         $this->validate($request,
             [
-                'ordernum' => [
-                    'required',
-                    Rule::unique('orders', 'order_num')
-                ],
+                'ordernum' => 'required|unique:orders,order_num,null,id,year_id,'.$request->input('year'),
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
@@ -150,7 +147,7 @@ class OrderController extends Controller
             ], 
             [
                 'ordernum.required' => 'وارد کردن شماره حواله لازم است.',
-                'ordernum.unique' => 'شماره حواله نباید تکراری باشد.',
+                'ordernum.unique' => 'شماره حواله در سال مالی تکراری باشد.',
                 'costumer.required' => 'وارد کردن مشتری لازم است.',
                 'transport.required' => 'وارد کردن باربری لازم است.',
                 'amount.required' => 'وارد کردن مقدار حواله لازم است.',
@@ -171,6 +168,7 @@ class OrderController extends Controller
         $order->costumer_id = $request->input('costumer');
         $order->transportation_id = $request->input('transport');
         $order->owner_id = $request->input('owner');
+        $order->year_id = $request->input('year');
         
         if($request->input('create') === "ایجاد حواله") {
             $order->is_certain = 0;

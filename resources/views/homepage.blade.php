@@ -50,7 +50,7 @@
             <!-- financial year select box -->
             <?php 
                 $years = App\Year::orderBy('id', 'desc')->get();
-
+                
                 foreach($years as $year) {
                     $formatted_year[$year->id] = $year->name;
                 }
