@@ -898,7 +898,9 @@ trait ValidatesAttributes
 
         $this->requireSameType($value, $comparedToValue);
 
-        return $this->getSize($attribute, $value) >= $this->getSize($attribute, $comparedToValue);
+        // return $this->getSize($attribute, $value) >= $this->getSize($attribute, $comparedToValue);
+
+        return $value >= $comparedToValue;
     }
 
     /**
@@ -923,7 +925,7 @@ trait ValidatesAttributes
 
         $this->requireSameType($value, $comparedToValue);
 
-        return $this->getSize($attribute, $value) <= $this->getSize($attribute, $comparedToValue);
+        return $value <= $comparedToValue;
     }
 
     /**

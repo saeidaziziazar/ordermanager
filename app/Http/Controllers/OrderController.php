@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Costumer;
 use App\Transportation;
 use App\Order;
+use App\Year;
 use App\Owner;
 use App\User;
 use Morilog\Jalali\Jalalian;
@@ -56,12 +57,14 @@ class OrderController extends Controller
         
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if(Auth::user()->transportation) {
-                $orders = Auth::user()->transportation->orders->where('is_certain', '=', '1');
+                $request->replace([
+                    'transporter' => Auth::user()->transportation->id,
+                ]);
+                $orders = $this->getOrders($request);
             } else {
                 $orders = $this->getOrders($request);
             }
         } else {
-            // dd($request->all());
             $orders = $this->getOrders($request);
         }        
 
@@ -133,8 +136,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->input('date') >= $request->input('start'));
         $this->authorize('create', Order::class);
+
+        $year = Year::find($request->input('year'));
+
+        $start = Jalalian::forge($year->start)->format('%Y/%m/%d');
+        $end = Jalalian::forge($year->end)->format('%Y/%m/%d');
+
+        $request->merge([
+            'start' => $start,
+            'end' => $end
+        ]);
 
         $this->validate($request,
             [
@@ -142,8 +154,7 @@ class OrderController extends Controller
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
-                // 'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/',
-                'date' => 'gt:start',
+                'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/|gte:start|lte:end',
                 'owner' => 'required',
             ], 
             [
@@ -154,6 +165,8 @@ class OrderController extends Controller
                 'amount.required' => 'وارد کردن مقدار حواله لازم است.',
                 'owner.required' => 'وارد کردن مالک لازم است.',
                 'date.required' => 'وارد کردن تاریخ لازم است.',
+                'date.gte' => 'تاریخ انتخاب شده خارج از محدوده سال مالی می باشد.',
+                'date.lte' => 'تاریخ انتخاب شده خارج از محدوده سال مالی می باشد.',
                 'date.regex' => 'تاریخ وارد شده صحیح نیست مثلا وارد کنید 1399/02/06',
             ]
         );
@@ -488,15 +501,21 @@ class OrderController extends Controller
 
         if ($start) {
             $start = (new Jalalian(substr($request->input('start'),0,4), substr($request->input('start'),5,2), substr($request->input('start'),8,2)))->toCarbon()->toDateString();
+
+            if ($start < '2020-09-22') {
+                $start = '2020-09-22';
+            }
         }
 
         if ($end) {
             $end = (new Jalalian(substr($request->input('end'),0,4), substr($request->input('end'),5,2), substr($request->input('end'),8,2)))->toCarbon()->toDateString();
         }
-
+    
         switch (true) {
             case ($start == null && $end == null && $transporter == null && $owner == null):
-                $orders = Order::orderBy('order_num', 'desc')->whereIn('is_certain', $certain)->get();
+                $orders = Order::where([
+                    
+                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
                 break;
             case ($start == null && $end == null && $transporter == null && $owner != null):
                 $orders = Order::where([
