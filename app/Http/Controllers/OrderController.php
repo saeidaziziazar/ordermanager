@@ -56,9 +56,6 @@ class OrderController extends Controller
         }
         
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $request->merge([
-                'year' => Year::where('defult', '1')->first()->id
-            ]);
             if(Auth::user()->transportation) {
                 $request->merge([
                     'transporter' => Auth::user()->transportation->id,
@@ -141,7 +138,12 @@ class OrderController extends Controller
     {
         $this->authorize('create', Order::class);
 
-        $year = Auth::user()->year;
+        if (Auth::user()->year) {
+            $year = Auth::user()->year;
+        } else {
+            $year = Year::where('defult', '1')->first();
+        }
+        
 
         $start = Jalalian::forge($year->start)->format('%Y/%m/%d');
         $end = Jalalian::forge($year->end)->format('%Y/%m/%d');
@@ -153,7 +155,7 @@ class OrderController extends Controller
 
         $this->validate($request,
             [
-                'ordernum' => 'required|unique:orders,order_num,null,id,year_id,'.$request->input('year'),
+                'ordernum' => 'required|unique:orders,order_num,null,id,year_id,'.$year->id,
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
@@ -185,7 +187,7 @@ class OrderController extends Controller
         $order->costumer_id = $request->input('costumer');
         $order->transportation_id = $request->input('transport');
         $order->owner_id = $request->input('owner');
-        $order->year_id = $request->input('year');
+        $order->year_id = $year->id;
         
         if($request->input('create') === "ایجاد حواله") {
             $order->is_certain = 0;

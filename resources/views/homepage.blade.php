@@ -20,7 +20,7 @@
 <body>
     @yield('contextmenu')
     <header>
-        <h3 class="title">سیستم مدیریت حواله های باربری</h3>
+        <h3 class="title"><a href="{{ url('/') }}">سیستم مدیریت حواله های باربری</a></h3>
         @if (Auth::check())
             <div class="user_info">
                 <ul>
