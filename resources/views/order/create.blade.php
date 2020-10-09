@@ -15,7 +15,7 @@
                 </ul>
             </div>
         @endif
-        {!! Form::open(['action' => 'OrderController@store', 'method' => 'POST', 'autocomplete' => 'off', 'id' => 'create_order']) !!}
+        {!! Form::open(['action' => 'OrderController@store', 'method' => 'POST', 'autocomplete' => 'off', 'id' => 'order']) !!}
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">

@@ -54,11 +54,20 @@
                 foreach($years as $year) {
                     $formatted_year[$year->id] = $year->name;
                 }
+
+                if (Auth::user()->year) {
+                    $defult = Auth::user()->year->id;
+                } else {
+                    $defult = App\Year::where('defult', '1')->first()->id;
+                }
+
             ?>
             <div class="financial_year">
                 <h6>سال مالی</h6>
 
-                {!! Form::select('year', $formatted_year, null, ['class' => 'form-control', 'form' => 'create_order', 'style' => 'width:fit-content;margin:0 10px 0 10px']); !!}
+                {!! Form::open(['action' => 'YearController@changeUserYear', 'method' => 'POST']) !!}
+                    {!! Form::select('year', $formatted_year, $defult, ['class' => 'form-control', 'style' => 'width:fit-content;margin:0 10px 0 10px', 'onChange' => 'this.form.submit()']); !!}
+                {!! Form::close() !!}
             </div>
         @endif
     </header>

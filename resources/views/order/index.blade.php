@@ -55,7 +55,7 @@
                 <option value="1">تایید شده</option>
             </select>
         </div>
-                {!! Form::open(['action' => 'OrderController@index', 'method' => 'POST', 'autocomplete' => 'off', 'style' => 'border:1px solid lightgrey;padding:10px;border-radius:5px;margin-top:10px;']) !!}
+                {!! Form::open(['action' => 'OrderController@index', 'method' => 'POST', 'autocomplete' => 'off', 'id' => 'order', 'style' => 'border:1px solid lightgrey;padding:10px;border-radius:5px;margin-top:10px;']) !!}
                 <div class="row" style="margin:0">
                     <div class="col-3" style="padding:0 5px 0 5px">
                         {!! Form::text('start', null, ['class' => 'form-control', 'id' => 'start', 'placeholder' => 'از تاریخ']) !!}

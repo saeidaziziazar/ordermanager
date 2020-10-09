@@ -56,8 +56,11 @@ class OrderController extends Controller
         }
         
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $request->merge([
+                'year' => Year::where('defult', '1')->first()->id
+            ]);
             if(Auth::user()->transportation) {
-                $request->replace([
+                $request->merge([
                     'transporter' => Auth::user()->transportation->id,
                 ]);
                 $orders = $this->getOrders($request);
@@ -138,7 +141,7 @@ class OrderController extends Controller
     {
         $this->authorize('create', Order::class);
 
-        $year = Year::find($request->input('year'));
+        $year = Auth::user()->year;
 
         $start = Jalalian::forge($year->start)->format('%Y/%m/%d');
         $end = Jalalian::forge($year->end)->format('%Y/%m/%d');
@@ -499,22 +502,42 @@ class OrderController extends Controller
             $certain = ['0', '1'];
         }
 
+        if (Auth::user()->year) {
+            $year = Auth::user()->year;
+        } else {
+            $year = Year::where('defult', '1')->first();
+        }
+
+        $year_start = $year->start;
+        $year_end = $year->end;
+
+        // dd($year_start, $year_end);
+
         if ($start) {
             $start = (new Jalalian(substr($request->input('start'),0,4), substr($request->input('start'),5,2), substr($request->input('start'),8,2)))->toCarbon()->toDateString();
 
-            if ($start < '2020-09-22') {
-                $start = '2020-09-22';
+            if ($start < $year_start) {
+                $start = $year_start;
             }
+        } else {
+            $start = $year_start;
         }
 
         if ($end) {
             $end = (new Jalalian(substr($request->input('end'),0,4), substr($request->input('end'),5,2), substr($request->input('end'),8,2)))->toCarbon()->toDateString();
+
+            if ($end > $year_end) {
+                $end = $year_end;
+            }
+        } else {
+            $end = $year_end;
         }
     
         switch (true) {
             case ($start == null && $end == null && $transporter == null && $owner == null):
                 $orders = Order::where([
-                    
+                    ['date', '>=', $start],
+                    ['date', '<=', $end],
                 ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
                 break;
             case ($start == null && $end == null && $transporter == null && $owner != null):

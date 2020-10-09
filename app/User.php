@@ -14,4 +14,8 @@ class User extends Authenticatable
     public function transportation() {
         return $this->belongsTo('App\Transportation');
     }
+
+    public function year() {
+        return $this->belongsTo('App\Year');
+    }
 }

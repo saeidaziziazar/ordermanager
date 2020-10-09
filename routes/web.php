@@ -23,6 +23,7 @@ Route::post('orders/certain', 'OrderController@certain')->middleware('selected')
 Route::post('orders/temporary', 'OrderController@temporary')->middleware('selected');
 Route::get('orders/create/{id}', 'OrderController@create');
 Route::post('order', 'OrderController@store');
+Route::post('year/change', 'YearController@changeUserYear');
 Route::match(array('GET', 'POST'),'acount', 'UserController@acount')->middleware(['auth', 'active',]);
 Route::match(array('GET', 'POST'), 'orders', 'OrderController@index')->middleware(['auth', 'active',]);;
 

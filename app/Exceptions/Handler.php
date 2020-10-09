@@ -46,22 +46,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof AuthorizationException) { 
-            return response()->view('errors.403');
-        }
+        // if ($exception instanceof AuthorizationException) { 
+        //     return response()->view('errors.403');
+        // }
 
-        // 404 page with status code 200
-        if ($exception instanceof NotFoundHttpException) {
-            return response()->view('errors.404');
-        } 
+        // // 404 page with status code 200
+        // if ($exception instanceof NotFoundHttpException) {
+        //     return response()->view('errors.404');
+        // } 
 
-        if ($exception instanceof \ErrorException) {
-            return response()->view('errors.400');
-        }
+        // if ($exception instanceof \ErrorException) {
+        //     return response()->view('errors.400');
+        // }
 
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return response()->view('errors.400');
-        }
+        // if ($exception instanceof MethodNotAllowedHttpException) {
+        //     return response()->view('errors.400');
+        // }
 
         return parent::render($request, $exception);
     }
