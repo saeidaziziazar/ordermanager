@@ -15,6 +15,63 @@
     <script src="{{ asset('dynatable/dynatable.js') }}"></script>
     <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('table2excel/jquery.table2excel.js') }}"></script>
+    <script src="{{ asset('highcharts/highcharts.js') }}"></script>
+    <style>
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 360px; 
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        .highcharts-legend-item text tspan {
+            font-size: 16px;
+            font-weight: normal;
+            font-family: "Shabnam FD", "Samim", "B Yekan";
+        }
+        .highcharts-credits {
+            display: none;
+        }
+        .highcharts-label text tspan {
+            font-weight: normal;
+            font-family: "Shabnam FD", "Samim", "B Yekan";
+        }
+        .highcharts-root {
+            font-weight: normal !important;
+            font-family: "Shabnam FD", "Samim", "B Yekan" !important;
+            font-size: 18px !important;
+        }
+        .highcharts-title {
+            font-family: "Shabnam FD", "Samim", "B Yekan" !important;
+        }
+    </style>
     <title>Document</title>
 </head>
 <body>
@@ -108,6 +165,9 @@
     <article>
         @yield('title')
         @yield('content')
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
     </article>
     <footer></footer>
 
@@ -117,6 +177,49 @@
         setTimeout(function(){
             $('.alert').remove();
         }, 5000);
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'line'
+            },
+
+            title: {
+                text: 'باربری'
+            },
+
+            yAxis: {
+                title: {
+                    text: 'وزن'
+                }
+            },
+
+            xAxis: {
+                categories: ['سس', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+            },
+
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true,
+                }
+            },
+
+            series: [{
+                name: 'سبزدشت',
+                data: [95, 200, 30, 20, 175, 190, 100, 120]
+            }, {
+                name: 'بهران شفق',
+                data: [85, 100, 200, 100, 25, 40, 170, 120]
+            }],
+        });
     </script>
 </body>
 </html>
