@@ -71,6 +71,9 @@
         .highcharts-title {
             font-family: "Shabnam FD", "Samim", "B Yekan" !important;
         }
+        .tooltip {
+            width: 200px;
+        }
     </style>
     <title>Document</title>
 </head>
@@ -178,48 +181,93 @@
             $('.alert').remove();
         }, 5000);
 
+        // Highcharts.chart('container', {
+        //     chart: {
+        //         type: 'line'
+        //     },
+
+        //     title: {
+        //         text: 'باربری'
+        //     },
+
+        //     yAxis: {
+        //         title: {
+        //             text: 'وزن'
+        //         }
+        //     },
+
+        //     xAxis: {
+        //         categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان']
+        //     },
+
+        //     legend: {
+        //         layout: 'vertical',
+        //         align: 'right',
+        //         verticalAlign: 'middle',
+        //     },
+
+        //     plotOptions: {
+        //         line: {
+        //             dataLabels: {
+        //                 enabled: true
+        //             },
+        //             enableMouseTracking: false,
+        //         }
+        //     },
+
+        //     series: [{
+        //         name: 'سبزدشت',
+        //         data: [95, 200, 30, 20, 175, 190, 100, 120]
+        //     }, {
+        //         name: 'بهران شفق',
+        //         data: [85, 100, 200, 100, 25, 40, 170, 120]
+        //     }],
+        // });
+
         Highcharts.chart('container', {
-            chart: {
-                type: 'line'
-            },
-
-            title: {
-                text: 'باربری'
-            },
-
-            yAxis: {
-                title: {
-                    text: 'وزن'
-                }
-            },
-
-            xAxis: {
-                categories: ['سس', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
-            },
-
-            legend: {
+    chart: {
+        type: 'areaspline',
+    },
+    title: {
+        text: 'Average fruit consumption during one week'
+    },
+    legend: {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle',
             },
 
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: true,
-                }
+    xAxis: {
+        categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', '07/24']
+    },
+    yAxis: {
+        title: {
+            text: 'Fruit units'
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    tooltip: {
+        // className: 'tooltip'
+    },
+    plotOptions: {
+        areaspline: {
+            fillOpacity: 0.5,
+            dataLabels: {
+                enabled: true
             },
-
-            series: [{
+        },
+        enableMouseTracking: false,
+    },
+    series: [{
                 name: 'سبزدشت',
                 data: [95, 200, 30, 20, 175, 190, 100, 120]
             }, {
                 name: 'بهران شفق',
-                data: [85, 100, 200, 100, 25, 40, 170, 120]
+                data: [75, 100, 200, 100, 25, 40, 170, 115]
             }],
-        });
+});
     </script>
 </body>
 </html>
