@@ -10,12 +10,14 @@
     <link rel="stylesheet" href="{{ asset('dynatable/dynatable.css') }}">
     <link rel="stylesheet" href="{{ asset('datepicker/persianDatepicker-default.css') }}">
     <link rel="stylesheet" href="{{ asset('select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('chart.js/package/dist/Chart.css') }}">
     <script src="{{ asset('jquery/dist/jquery.js') }}"></script>
     <script src="{{ asset('bootstrap/dist/js/bootstrap.js') }}"></script>
     <script src="{{ asset('dynatable/dynatable.js') }}"></script>
     <script src="{{ asset('select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('table2excel/jquery.table2excel.js') }}"></script>
     <script src="{{ asset('highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('chart.js/package/dist/Chart.js') }}"></script>
     <style>
         .highcharts-figure, .highcharts-data-table table {
             min-width: 360px; 
@@ -168,9 +170,14 @@
     <article>
         @yield('title')
         @yield('content')
-        <figure class="highcharts-figure">
+        <div class="content">
+        <canvas id="myChart" width="190" height="100">
+            Your browser does not support the canvas element.
+        </canvas>
+        </div>
+        {{-- <figure class="highcharts-figure">
             <div id="container"></div>
-        </figure>
+        </figure> --}}
     </article>
     <footer></footer>
 
@@ -180,6 +187,51 @@
         setTimeout(function(){
             $('.alert').remove();
         }, 5000);
+
+        Chart.defaults.global.defaultFontColor = 'red';
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['07/19', '07/20', '07/21', '07/22', '07/23', '07/24'],
+        datasets: [{
+            label: 'سبزدشت',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        tooltips: {
+            mode: 'nearest',
+            titleFontFamily: "'Shabnam FD'",
+            titleFontStyle: 'normal',
+            titleFontSize: 16,
+            bodyFontFamily: 'Shabnam FD',
+            bodyAlign: 'right',
+            rtl: true,
+        },
+        legend: {
+            labels: {
+                fontFamily: "'Shabnam FD'",
+                fontSize: 14,
+            },
+            position: 'bottom'
+        },
+        title: {
+            display: true,
+            text: 'باربری',
+            fontFamily: "'Shabnam FD'",
+            fontSize:18,
+        }
+    }
+});
 
         // Highcharts.chart('container', {
         //     chart: {
@@ -224,50 +276,50 @@
         //     }],
         // });
 
-        Highcharts.chart('container', {
-    chart: {
-        type: 'areaspline',
-    },
-    title: {
-        text: 'Average fruit consumption during one week'
-    },
-    legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-            },
+//         Highcharts.chart('container', {
+//     chart: {
+//         type: 'areaspline',
+//     },
+//     title: {
+//         text: 'Average fruit consumption during one week'
+//     },
+//     legend: {
+//                 layout: 'vertical',
+//                 align: 'right',
+//                 verticalAlign: 'middle',
+//             },
 
-    xAxis: {
-        categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', '07/24']
-    },
-    yAxis: {
-        title: {
-            text: 'Fruit units'
-        }
-    },
-    credits: {
-        enabled: false
-    },
-    tooltip: {
-        // className: 'tooltip'
-    },
-    plotOptions: {
-        areaspline: {
-            fillOpacity: 0.5,
-            dataLabels: {
-                enabled: true
-            },
-        },
-        enableMouseTracking: false,
-    },
-    series: [{
-                name: 'سبزدشت',
-                data: [95, 200, 30, 20, 175, 190, 100, 120]
-            }, {
-                name: 'بهران شفق',
-                data: [75, 100, 200, 100, 25, 40, 170, 115]
-            }],
-});
+//     xAxis: {
+//         categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', '07/24']
+//     },
+//     yAxis: {
+//         title: {
+//             text: 'Fruit units'
+//         }
+//     },
+//     credits: {
+//         enabled: false
+//     },
+//     tooltip: {
+//         // className: 'tooltip'
+//     },
+//     plotOptions: {
+//         areaspline: {
+//             fillOpacity: 0.5,
+//             dataLabels: {
+//                 enabled: true
+//             },
+//         },
+//         enableMouseTracking: false,
+//     },
+//     series: [{
+//                 name: 'سبزدشت',
+//                 data: [95, 200, 30, 20, 175, 190, 100, 120]
+//             }, {
+//                 name: 'بهران شفق',
+//                 data: [75, 100, 200, 100, 25, 40, 170, 115]
+//             }],
+// });
     </script>
 </body>
 </html>
