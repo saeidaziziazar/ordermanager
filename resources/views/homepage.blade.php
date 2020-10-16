@@ -18,65 +18,6 @@
     <script src="{{ asset('table2excel/jquery.table2excel.js') }}"></script>
     <script src="{{ asset('highcharts/highcharts.js') }}"></script>
     <script src="{{ asset('chart.js/package/dist/Chart.js') }}"></script>
-    <style>
-        .highcharts-figure, .highcharts-data-table table {
-            min-width: 360px; 
-            max-width: 800px;
-            margin: 1em auto;
-        }
-
-        .highcharts-data-table table {
-            font-family: Verdana, sans-serif;
-            border-collapse: collapse;
-            border: 1px solid #EBEBEB;
-            margin: 10px auto;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-        }
-        .highcharts-data-table caption {
-            padding: 1em 0;
-            font-size: 1.2em;
-            color: #555;
-        }
-        .highcharts-data-table th {
-            font-weight: 600;
-            padding: 0.5em;
-        }
-        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-            padding: 0.5em;
-        }
-        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-        .highcharts-data-table tr:hover {
-            background: #f1f7ff;
-        }
-
-        .highcharts-legend-item text tspan {
-            font-size: 16px;
-            font-weight: normal;
-            font-family: "Shabnam FD", "Samim", "B Yekan";
-        }
-        .highcharts-credits {
-            display: none;
-        }
-        .highcharts-label text tspan {
-            font-weight: normal;
-            font-family: "Shabnam FD", "Samim", "B Yekan";
-        }
-        .highcharts-root {
-            font-weight: normal !important;
-            font-family: "Shabnam FD", "Samim", "B Yekan" !important;
-            font-size: 18px !important;
-        }
-        .highcharts-title {
-            font-family: "Shabnam FD", "Samim", "B Yekan" !important;
-        }
-        .tooltip {
-            width: 200px;
-        }
-    </style>
     <title>Document</title>
 </head>
 <body>
@@ -171,13 +112,10 @@
         @yield('title')
         @yield('content')
         <div class="content">
-        <canvas id="myChart" width="190" height="100">
+        <canvas id="myChart" width="160" height="100">
             Your browser does not support the canvas element.
         </canvas>
         </div>
-        {{-- <figure class="highcharts-figure">
-            <div id="container"></div>
-        </figure> --}}
     </article>
     <footer></footer>
 
@@ -188,19 +126,42 @@
             $('.alert').remove();
         }, 5000);
 
-        Chart.defaults.global.defaultFontColor = 'red';
+        Chart.defaults.global.defaultFontStyle = 'normal';
+        Chart.defaults.global.defaultFontFamily = 'Shabnam FD';
+        Chart.defaults.global.defaultFontSize = 11;
         var ctx = document.getElementById('myChart');
         var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['07/19', '07/20', '07/21', '07/22', '07/23', '07/24'],
-        datasets: [{
+        type: 'line',
+        data: {
+        labels: ['07/05', '07/06', '07/07', '07/08', '07/09', '07/10', '07/11', '07/12', '07/13', '07/14', '07/15', '07/16', '07/17', '07/18', '07/19', '07/20', '07/21', '07/22', '07/23', '07/24'],
+        datasets: [
+            {
             label: 'سبزدشت',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-        }]
-    },
-    options: {
+            data: [120, 30, 300, 50, 100, 10, 200, 100, 800, 0, 150, 100, 120, 30, 30, 10, 200, 100, 20, 300],
+            borderWidth: 2,
+            fill: false,
+            borderColor: 'green',
+            pointBackgroundColor: 'green',
+            },
+            {
+            label: 'بهران شفق',
+            data: [20, 30, 30, 200, 130, 100, 20, 50, 300, 30, 15, 140, 200, 130, 300, 40, 20, 60, 120, 30],
+            borderWidth: 2,
+            fill: false,
+            borderColor: 'red',
+            pointBackgroundColor: 'red',
+            },
+            {
+            label: 'ثمربار',
+            data: [20, 0, 50, 20, 10, 0, 0, 50, 30, 0, 15, 0, 20, 10, 30, 0, 0, 60, 10, 0],
+            borderWidth: 2,
+            fill: false,
+            borderColor: 'blue',
+            pointBackgroundColor: 'blue',
+            }
+        ]
+        },
+        options: {
         scales: {
             yAxes: [{
                 ticks: {
@@ -209,17 +170,14 @@
             }]
         },
         tooltips: {
-            mode: 'nearest',
-            titleFontFamily: "'Shabnam FD'",
+            mode: 'index',
             titleFontStyle: 'normal',
             titleFontSize: 16,
-            bodyFontFamily: 'Shabnam FD',
             bodyAlign: 'right',
             rtl: true,
         },
         legend: {
             labels: {
-                fontFamily: "'Shabnam FD'",
                 fontSize: 14,
             },
             position: 'bottom'
@@ -227,99 +185,11 @@
         title: {
             display: true,
             text: 'باربری',
-            fontFamily: "'Shabnam FD'",
             fontSize:18,
+            padding: 30,
         }
-    }
-});
-
-        // Highcharts.chart('container', {
-        //     chart: {
-        //         type: 'line'
-        //     },
-
-        //     title: {
-        //         text: 'باربری'
-        //     },
-
-        //     yAxis: {
-        //         title: {
-        //             text: 'وزن'
-        //         }
-        //     },
-
-        //     xAxis: {
-        //         categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان']
-        //     },
-
-        //     legend: {
-        //         layout: 'vertical',
-        //         align: 'right',
-        //         verticalAlign: 'middle',
-        //     },
-
-        //     plotOptions: {
-        //         line: {
-        //             dataLabels: {
-        //                 enabled: true
-        //             },
-        //             enableMouseTracking: false,
-        //         }
-        //     },
-
-        //     series: [{
-        //         name: 'سبزدشت',
-        //         data: [95, 200, 30, 20, 175, 190, 100, 120]
-        //     }, {
-        //         name: 'بهران شفق',
-        //         data: [85, 100, 200, 100, 25, 40, 170, 120]
-        //     }],
-        // });
-
-//         Highcharts.chart('container', {
-//     chart: {
-//         type: 'areaspline',
-//     },
-//     title: {
-//         text: 'Average fruit consumption during one week'
-//     },
-//     legend: {
-//                 layout: 'vertical',
-//                 align: 'right',
-//                 verticalAlign: 'middle',
-//             },
-
-//     xAxis: {
-//         categories: ['فرودین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', '07/24']
-//     },
-//     yAxis: {
-//         title: {
-//             text: 'Fruit units'
-//         }
-//     },
-//     credits: {
-//         enabled: false
-//     },
-//     tooltip: {
-//         // className: 'tooltip'
-//     },
-//     plotOptions: {
-//         areaspline: {
-//             fillOpacity: 0.5,
-//             dataLabels: {
-//                 enabled: true
-//             },
-//         },
-//         enableMouseTracking: false,
-//     },
-//     series: [{
-//                 name: 'سبزدشت',
-//                 data: [95, 200, 30, 20, 175, 190, 100, 120]
-//             }, {
-//                 name: 'بهران شفق',
-//                 data: [75, 100, 200, 100, 25, 40, 170, 115]
-//             }],
-// });
+        }
+    });
     </script>
 </body>
 </html>
