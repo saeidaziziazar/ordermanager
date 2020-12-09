@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('homepage');
-})->middleware('auth');
+Route::get('/', 'OrderController@graph')->middleware('auth');
 
 Route::post('orders/report', 'OrderController@report')->middleware('checkorder');
 Route::match(array('GET', 'POST'), 'orders/generalreport', 'OrderController@generalReport')->middleware(['auth', 'active',]);

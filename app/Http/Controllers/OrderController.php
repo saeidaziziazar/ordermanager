@@ -307,6 +307,88 @@ class OrderController extends Controller
      * reporting from orders
      */
 
+    public function graph() {
+        $labels = [];
+        $dates = [];
+
+        for ($i=0; $i < 15 ; $i++) { 
+            array_push($dates, Carbon::now()->subDays($i));
+            array_push($labels, Jalalian::fromCarbon(Carbon::now()->subDays($i))->format('%m/%d'));
+        }
+
+        $colors = ['pink', 'cyan', 'orange', 'red', 'green', 'blue', 'black'];
+        $datasets = [];
+
+        if (Auth::user()->transportation) {
+            $transportations = Auth::user()->transportation()->get();
+        } else {
+            $transportations = Transportation::all();
+        }
+        
+        foreach($transportations as $transporter) {
+            $data = [];
+            foreach ($dates as $date) {
+                $sumOfDay = Order::where([
+                    ['date', '=', $date->toDateString()],
+                    ['transportation_id', '=', $transporter->id],
+                ])->sum('amount');
+                $ton = $sumOfDay/1000;
+                array_push($data, $ton);
+            }
+            $dataset = [
+                'label' => $transporter->name,
+                'data' => $data,
+                'borderWidth' => 2,
+                'fill' => false,
+                'borderColor' => $colors[count($colors)-1],
+                'pointBackgroundColor' => $colors[count($colors)-1],
+            ];
+            array_push($datasets, $dataset);
+            array_pop($colors);
+            $dataset = [];
+        }
+
+        $chartjs = app()->chartjs
+        ->name('lineChartTest')
+        ->type('line')
+        ->size(['width' => 400, 'height' => 250])
+        ->labels($labels)
+        ->datasets($datasets)
+        ->options([
+            'scales' => [
+                'yAxes' => [
+                    'scaleLabel' => [
+                        'display' => true,
+                        'labelString' => '',
+                    ],
+                    'ticks' => [
+                        'beginAtZero' => true
+                    ]
+                ],
+            ],
+            'tooltips' => [
+                'mode' => 'index',
+                'titleFontStyle' => 'normal',
+                'titleFontSize' => 16,
+                'bodyAlign' => 'right',
+                'rtl' => true,
+            ],
+            'legend' => [
+                'labels' => [
+                    'fontSize' => 14,
+                ],
+                'position' => 'bottom'
+            ],
+            'title' => [
+                'display' => true,
+                'text' => 'مجموع تناژ باربری ها در هر روز',
+                'fontSize' => 16,
+                'padding' => 30,
+            ]
+        ]);
+        return view('home', compact('chartjs'));
+    }
+
     public function report(Request $request) {
         $date = Jalalian::now()->format('%Y/%m/%d');
 

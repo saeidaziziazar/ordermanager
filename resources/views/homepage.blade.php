@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('datepicker/persianDatepicker-default.css') }}">
     <link rel="stylesheet" href="{{ asset('select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('chart.js/package/dist/Chart.css') }}">
+    
     <script src="{{ asset('jquery/dist/jquery.js') }}"></script>
     <script src="{{ asset('bootstrap/dist/js/bootstrap.js') }}"></script>
     <script src="{{ asset('dynatable/dynatable.js') }}"></script>
@@ -111,11 +112,6 @@
     <article>
         @yield('title')
         @yield('content')
-        <div class="content">
-        <canvas id="myChart" width="160" height="100">
-            Your browser does not support the canvas element.
-        </canvas>
-        </div>
     </article>
     <footer></footer>
 
@@ -129,67 +125,6 @@
         Chart.defaults.global.defaultFontStyle = 'normal';
         Chart.defaults.global.defaultFontFamily = 'Shabnam FD';
         Chart.defaults.global.defaultFontSize = 11;
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-        labels: ['07/05', '07/06', '07/07', '07/08', '07/09', '07/10', '07/11', '07/12', '07/13', '07/14', '07/15', '07/16', '07/17', '07/18', '07/19', '07/20', '07/21', '07/22', '07/23', '07/24'],
-        datasets: [
-            {
-            label: 'سبزدشت',
-            data: [120, 30, 300, 50, 100, 10, 200, 100, 800, 0, 150, 100, 120, 30, 30, 10, 200, 100, 20, 300],
-            borderWidth: 2,
-            fill: false,
-            borderColor: 'green',
-            pointBackgroundColor: 'green',
-            },
-            {
-            label: 'بهران شفق',
-            data: [20, 30, 30, 200, 130, 100, 20, 50, 300, 30, 15, 140, 200, 130, 300, 40, 20, 60, 120, 30],
-            borderWidth: 2,
-            fill: false,
-            borderColor: 'red',
-            pointBackgroundColor: 'red',
-            },
-            {
-            label: 'ثمربار',
-            data: [20, 0, 50, 20, 10, 0, 0, 50, 30, 0, 15, 0, 20, 10, 30, 0, 0, 60, 10, 0],
-            borderWidth: 2,
-            fill: false,
-            borderColor: 'blue',
-            pointBackgroundColor: 'blue',
-            }
-        ]
-        },
-        options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        tooltips: {
-            mode: 'index',
-            titleFontStyle: 'normal',
-            titleFontSize: 16,
-            bodyAlign: 'right',
-            rtl: true,
-        },
-        legend: {
-            labels: {
-                fontSize: 14,
-            },
-            position: 'bottom'
-        },
-        title: {
-            display: true,
-            text: 'باربری',
-            fontSize:18,
-            padding: 30,
-        }
-        }
-    });
     </script>
 </body>
 </html>

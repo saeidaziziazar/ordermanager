@@ -1,11 +1,9 @@
 @extends('homepage')
 
 @section('content')
-
-@endsection
-
-@section('scripts')
-    <script type="text/javascript">
-        
-    </script>
+    <div class="content">
+        <div width="160" height="100">
+            {!! $chartjs->render() !!}
+        </div>
+    </div>
 @endsection
