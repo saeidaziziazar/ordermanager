@@ -38,6 +38,14 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">
+                      <span class="input-group-text">توضیحات<span>
+                    </div>
+                    {!! Form::text('description', '', ['class' => 'form-control']); !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append">
                       <span class="input-group-text">کد یا شناسه ملی</span>
                     </div>
                     {!! Form::text('nationalcode', '', ['class' => 'form-control']); !!}
@@ -46,17 +54,17 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">
-                      <span class="input-group-text">شماره همراه<span>
+                      <span class="input-group-text">شماره تماس<span>
                     </div>
-                    {!! Form::text('cellphonenum', '', ['class' => 'form-control']); !!}
+                    {!! Form::text('phonenum', '', ['class' => 'form-control']); !!}
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">
-                      <span class="input-group-text">شماره تلفن<span>
+                      <span class="input-group-text">شماره همراه<span>
                     </div>
-                    {!! Form::text('phonenum', '', ['class' => 'form-control']); !!}
+                    {!! Form::text('cellphonenum', '', ['class' => 'form-control']); !!}
                 </div>
             </div>
             <div class="form-group">

@@ -213,6 +213,12 @@ body {
             right: 50%;
             transform: translate(50%,-50%);
         }
+
+        
+        .table-sm th, .table-sm td {
+            padding: 0.5rem !important;
+        }
+        
     }
 
     footer {

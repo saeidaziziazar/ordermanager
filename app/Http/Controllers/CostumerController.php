@@ -72,6 +72,7 @@ class CostumerController extends Controller
 
         $costumer->first_name = $request->input('firstname');
         $costumer->last_name = $request->input('lastname');
+        $costumer->description = $request->input('description');
         $costumer->national_code = $request->input('nationalcode');
         $costumer->cell_phone_num = $request->input('cellphonenum');
         $costumer->phone_num = $request->input('phonenum');
@@ -141,6 +142,7 @@ class CostumerController extends Controller
 
         $costumer->first_name = $request->input('firstname');
         $costumer->last_name = $request->input('lastname');
+        $costumer->description = $request->input('description');
         $costumer->national_code = $request->input('nationalcode');
         $costumer->cell_phone_num = $request->input('cellphonenum');
         $costumer->phone_num = $request->input('phonenum');

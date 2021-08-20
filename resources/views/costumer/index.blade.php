@@ -38,10 +38,11 @@
                         <input type="checkbox" id="checkAll" onclick="checkAllCheckBox(event)">
                     </th>
                     <th scope="col">نام مشتری</th>
+                    <th scope="col">توضیحات</th>
                     <th scope="col">کد ملی</th>
-                    <th scope="col">شماره همراه</th>
-                    <th scope="col">کدپستی</th>
-                    <th scope="col">آدرس</th>
+                    <th scope="col">شماره تماس</th>
+                    <!-- <th scope="col">کدپستی</th>
+                    <th scope="col">آدرس</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -52,10 +53,11 @@
                                 {!! Form::checkbox('costumers[]', $costumer->id) !!}
                             </td>
                             <td>{{ $costumer->first_name . ' ' . $costumer->last_name }}</td>
+                            <td>{{ $costumer->description }}</td>
                             <td>{{ $costumer->national_code }}</td>
-                            <td>{{ $costumer->cell_phone_num }}</td>
-                            <td>{{ $costumer->zip_code }}</td>
-                            <td>{{ $costumer->address }}</td>
+                            <td>{{ $costumer->phone_num }}</td>
+                            <!-- <td>{{ $costumer->zip_code }}</td>
+                            <td>{{ $costumer->address }}</td> -->
                         </tr>
                     @endforeach
                     <ul class="actions">

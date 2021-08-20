@@ -247,10 +247,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $ids = 45;
         $this->authorize('update', Order::class);
         $this->validate($request,
             [
-                'ordernum' => 'required|unique:orders,order_num,'.$id,
+                'ordernum' => 'required|unique:orders,order_num,'.$id.' and `year_id` <> 2',
                 'costumer' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
