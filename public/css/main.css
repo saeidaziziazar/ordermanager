@@ -190,11 +190,46 @@ body article div.content {
 body article .table-sm th, body article .table-sm td {
   padding: 0.5rem !important;
 }
+body article .address {
+  border: 1px solid #ced4da;
+  height: 300px;
+  width: auto;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+body article .address .col {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+body article .address .col .form-control {
+  padding: 6px;
+  font-size: 0.8rem;
+}
+body article .address .add-address {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+body article .delete {
+  padding: 5px;
+  margin: 0 -10px 0 5px;
+}
 body footer {
   grid-column: 1/span 14;
   grid-row: 3/span 1;
   background-color: white;
   z-index: 7;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input-group {

@@ -17,4 +17,8 @@ class Order extends Model
     public function owner() {
         return $this->belongsTo('App\Owner', 'owner_id');
     }
+
+    public function year() {
+        return $this->belongsTo('App\Year', 'year_id');
+    }
 }
