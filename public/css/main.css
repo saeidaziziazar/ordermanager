@@ -217,6 +217,7 @@ body article .address .add-address {
 body article .delete {
   padding: 5px;
   margin: 0 -10px 0 5px;
+  cursor: pointer;
 }
 body footer {
   grid-column: 1/span 14;

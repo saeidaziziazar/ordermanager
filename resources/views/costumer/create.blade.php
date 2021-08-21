@@ -59,7 +59,7 @@
                     {!! Form::text('phonenum', '', ['class' => 'form-control']); !!}
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">
                       <span class="input-group-text">شماره همراه<span>
@@ -82,27 +82,25 @@
                     </div>
                     {!! Form::text('address', '', ['class' => 'form-control']); !!}
                 </div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <h6>آدرس ها</h6>
                 <div>
                 <div class="address">
                     <div style="display:grid;grid-template-columns:30px auto">
-                        <a href="" class="delete">
-                            <img src="{{ asset('icons/delete.svg') }}" alt="">
-                        </a>
+                        <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                         <div class="row" style="margin-bottom:15px">
                             <div class="col col-2">
-                                <input type="text" class="form-control" placeholder="عنوان">
+                                <input type="text" name="addressname[]" class="form-control" value="" placeholder="عنوان">
                             </div>
                             <div class="col col-5">
-                                <input type="text" class="form-control" placeholder="آدرس">
+                                <input type="text" name="address" class="form-control" placeholder="آدرس">
                             </div>
                             <div class="col col-2">
-                                <input type="text" class="form-control" placeholder="شماره همراه">
+                                <input type="text" name="cellphonenum" class="form-control" placeholder="شماره همراه">
                             </div>
                             <div class="col col-2">
-                                <input type="text" class="form-control" placeholder="کد پستی">
+                                <input type="text" name="zipcode" class="form-control" placeholder="کد پستی">
                             </div>
                             <div class="col col-1">
                                 <input class="center" type="radio" name="default">
@@ -110,9 +108,8 @@
                         </div>
                     </div>
                     <div id="add-address">
-                        <a href="#" class="" onclick="appendAddressToList()">
-                            <img style="width:15px" src="{{ asset('icons/add.svg') }}" alt="">
-                        </a>
+                        
+                            <img onclick="appendAddressToList()" style="width:15px;cursor:pointer" src="{{ asset('icons/add.svg') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -127,12 +124,10 @@
     <<script>
         var str = 
             `<div style="display:grid;grid-template-columns:30px auto">
-                <a href="" class="delete">
-                    <img src="{{ asset('icons/delete.svg') }}" alt="">
-                </a>
+                <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                 <div class="row" style="margin-bottom: 15px">
                     <div class="col col-2">
-                        <input type="text" class="form-control" placeholder="عنوان">
+                        <input type="text" name="addressname[]" class="form-control" placeholder="عنوان">
                     </div>
                     <div class="col col-5">
                         <input type="text" class="form-control" placeholder="آدرس">
@@ -151,8 +146,11 @@
 
             function appendAddressToList() {
                 var x = document.querySelector("#add-address");
-                console.log(x);
                 x.insertAdjacentHTML('beforebegin', str);
+            }
+
+            function removeAddressFromList(e) {
+                e.target.parentNode.remove();
             }
     </script>
 @endsection

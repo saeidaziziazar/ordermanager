@@ -47,6 +47,7 @@ class CostumerController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->authorize('create', Costumer::class);
 
         $this->validate($request, [
@@ -56,6 +57,7 @@ class CostumerController extends Controller
             'nationalcode' => 'unique:costumers,national_code|digits_between:10,11',
             'zipcode' => 'nullable|digits:10',
             'address' => 'required',
+            'addressname[]' => 'required',
         ],[
             
             'firstname.required' => 'پر کردن نام لازم است',
