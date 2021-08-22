@@ -86,30 +86,54 @@
             <div class="form-group">
                 <h6>آدرس ها</h6>
                 <div>
-                <div class="address">
-                    <div style="display:grid;grid-template-columns:30px auto">
-                        <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
-                        <div class="row" style="margin-bottom:15px">
-                            <div class="col col-2">
-                                <input type="text" name="addressname[]" class="form-control" value="" placeholder="عنوان">
+                <div class="address">            
+                    @if(old('addressname'))
+                        @for ($i = 0; $i < count(old('addressname')); $i++)
+                            <div style="display:grid;grid-template-columns:30px auto">
+                                <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                                <div class="row" style="margin-bottom:15px">
+                                    <div class="col col-2">
+                                        <input type="text" name="addressname[]" class="form-control" value="{{old('addressname')[$i]}}" placeholder="عنوان">
+                                    </div>
+                                    <div class="col col-5">
+                                        <input type="text" name="address[]" class="form-control" value="{{old('address')[$i]}}" placeholder="آدرس">
+                                    </div>
+                                    <div class="col col-2">
+                                        <input type="text" name="cellphonenum[]" class="form-control" value="{{old('cellphonenum')[$i]}}" placeholder="شماره همراه">
+                                    </div>
+                                    <div class="col col-2">
+                                        <input type="text" name="zipcode[]" class="form-control" value="{{old('zipcode')[$i]}}" placeholder="کد پستی">
+                                    </div>
+                                    <div class="col col-1">
+                                        <input class="center" type="radio" name="default">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col col-5">
-                                <input type="text" name="address" class="form-control" placeholder="آدرس">
-                            </div>
-                            <div class="col col-2">
-                                <input type="text" name="cellphonenum" class="form-control" placeholder="شماره همراه">
-                            </div>
-                            <div class="col col-2">
-                                <input type="text" name="zipcode" class="form-control" placeholder="کد پستی">
-                            </div>
-                            <div class="col col-1">
-                                <input class="center" type="radio" name="default">
+                        @endfor
+                    @else
+                        <div style="display:grid;grid-template-columns:30px auto">
+                            <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                            <div class="row" style="margin-bottom:15px">
+                                <div class="col col-2">
+                                    <input type="text" name="addressname[]" class="form-control" value="" placeholder="عنوان">
+                                </div>
+                                <div class="col col-5">
+                                    <input type="text" name="address[]" class="form-control" placeholder="آدرس">
+                                </div>
+                                <div class="col col-2">
+                                    <input type="text" name="cellphonenum[]" class="form-control" placeholder="شماره همراه">
+                                </div>
+                                <div class="col col-2">
+                                    <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
+                                </div>
+                                <div class="col col-1">
+                                    <input class="center" type="radio" name="default">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     <div id="add-address">
-                        
-                            <img onclick="appendAddressToList()" style="width:15px;cursor:pointer" src="{{ asset('icons/add.svg') }}" alt="">
+                        <img onclick="appendAddressToList()" style="width:15px;cursor:pointer" src="{{ asset('icons/add.svg') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -121,7 +145,7 @@
 @endsection
 
 @section('scripts')
-    <<script>
+    <script>
         var str = 
             `<div style="display:grid;grid-template-columns:30px auto">
                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
@@ -130,13 +154,13 @@
                         <input type="text" name="addressname[]" class="form-control" placeholder="عنوان">
                     </div>
                     <div class="col col-5">
-                        <input type="text" class="form-control" placeholder="آدرس">
+                        <input type="text" name="address[]" class="form-control" placeholder="آدرس">
                     </div>
                     <div class="col col-2">
-                        <input type="text" class="form-control" placeholder="شماره همراه">
+                        <input type="text" name="cellphonenum[]" class="form-control" placeholder="شماره همراه">
                     </div>
                     <div class="col col-2">
-                        <input type="text" class="form-control" placeholder="کد پستی">
+                        <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
                     </div>
                     <div class="col col-1">
                         <input class="center" type="radio" name="default">
@@ -154,3 +178,8 @@
             }
     </script>
 @endsection
+<!-- @if(old('addressname'))
+    @foreach (old('addressname') as $name)
+        {{ $name }}<br>
+    @endforeach
+@endif -->

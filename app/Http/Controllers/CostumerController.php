@@ -47,16 +47,16 @@ class CostumerController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+
         $this->authorize('create', Costumer::class);
 
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'cellphonenum' => 'required|regex:/(09)[0-9]{9}/',
+            'cellphonenum[]' => 'required|regex:/(09)[0-9]{9}/',
             'nationalcode' => 'unique:costumers,national_code|digits_between:10,11',
-            'zipcode' => 'nullable|digits:10',
-            'address' => 'required',
+            'zipcode[]' => 'nullable|digits:10',
+            'address[]' => 'required',
             'addressname[]' => 'required',
         ],[
             
