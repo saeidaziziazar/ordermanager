@@ -199,8 +199,6 @@ class CostumerController extends Controller
 
         $costumer = Costumer::find($id);
 
-        dd($costumer);
-
         $this->authorize('update', $costumer);
 
         $costumer->first_name = $request->input('firstname');
@@ -209,7 +207,11 @@ class CostumerController extends Controller
         $costumer->national_code = $request->input('nationalcode');
         $costumer->phone_num = $request->input('phonenum');
 
-        // $costumer->save();
+        foreach ($costumer->addresses as $address) {
+            $address->destroy($address->id);
+        }
+
+        $costumer->save();
 
         for ($i=0; $i < count($request->get('address')); $i++) { 
             $address = new Address();

@@ -91,6 +91,7 @@
                             <div style="display:grid;grid-template-columns:30px auto">
                                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                                 <div class="row" style="margin-bottom:15px">
+                                    <input type="hidden" name="id[]"  value="{{ $address->id }}">
                                     <div class="col col-2">
                                         <input type="text" name="addressname[]" class="form-control" value="{{ $address->name }}" placeholder="عنوان">
                                     </div>
@@ -120,4 +121,39 @@
             </div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        var str = 
+            `<div style="display:grid;grid-template-columns:30px auto">
+                <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="col col-2">
+                        <input type="text" name="addressname[]" class="form-control" placeholder="عنوان">
+                    </div>
+                    <div class="col col-5">
+                        <input type="text" name="address[]" class="form-control" placeholder="آدرس">
+                    </div>
+                    <div class="col col-2">
+                        <input type="text" name="cellphonenum[]" class="form-control" placeholder="شماره همراه">
+                    </div>
+                    <div class="col col-2">
+                        <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
+                    </div>
+                    <div class="col col-1">
+                        <input class="center" type="radio" name="default">
+                    </div>
+                </div>
+            </div>`;
+
+            function appendAddressToList() {
+                var x = document.querySelector("#add-address");
+                x.insertAdjacentHTML('beforebegin', str);
+            }
+
+            function removeAddressFromList(e) {
+                e.target.parentNode.remove();
+            }
+    </script>
 @endsection
