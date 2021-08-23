@@ -59,30 +59,6 @@
                     {!! Form::text('phonenum', '', ['class' => 'form-control']); !!}
                 </div>
             </div>
-            <!-- <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-append">
-                      <span class="input-group-text">شماره همراه<span>
-                    </div>
-                    {!! Form::text('cellphonenum', '', ['class' => 'form-control']); !!}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-append">
-                      <span class="input-group-text">کد پستی<span>
-                    </div>
-                    {!! Form::text('zipcode', '', ['class' => 'form-control']); !!}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-append">
-                      <span class="input-group-text">آدرس<span>
-                    </div>
-                    {!! Form::text('address', '', ['class' => 'form-control']); !!}
-                </div>
-            </div> -->
             <div class="form-group">
                 <h6>آدرس ها</h6>
                 <div>

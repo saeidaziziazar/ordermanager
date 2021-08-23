@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Costumer;
+use App\Address;
 
 class CostumerController extends Controller
 {
@@ -47,28 +48,52 @@ class CostumerController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->authorize('create', Costumer::class);
 
-        $this->validate($request, [
+        $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'cellphonenum[]' => 'required|regex:/(09)[0-9]{9}/',
             'nationalcode' => 'unique:costumers,national_code|digits_between:10,11',
-            'zipcode[]' => 'nullable|digits:10',
-            'address[]' => 'required',
-            'addressname[]' => 'required',
-        ],[
+            'addressname.*' => 'required',
+            'address.*' => 'required',
+            'cellphonenum.*' => 'nullable|regex:/(09)[0-9]{9}/',
+            'zipcode.*' => 'nullable|digits:10',
+        ];
+
+        $messages = [
             
             'firstname.required' => 'پر کردن نام لازم است',
             'lastname.required' => 'پر کردن نام خانوادگی لازم است',
-            'zipcode.digits' => 'در صورت وارد کردن کد پستی باید ده رقم باشد',
             'nationalcode.digits_between' => 'کد (شناسه) ملی باید 10 یا 11 رقم باشد',
             'nationalcode.unique' => 'کد (شناسه) ملی تکراری می باشد',
-            'cellphonenum.required' => 'وارد کردن شماره تلفن همراه ضروری می باشد.',
-            'cellphonenum.regex' => 'شماره تلفن وارد شده صحیح نمی باشد',
-            'address.required' => 'وارد کردن آدرس ضروری می باشد',
-        ]);
+        ];
+
+        foreach ($request->get('addressname') as $key => $value) {
+            $index = $key + 1;
+            $messages['addressname.'.$key.'.required'] = "عنوان آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('address') as $key => $value) {
+            $index = $key + 1;
+            $messages['address.'.$key.'.required'] = "آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('cellphonenum') as $key => $value) {
+            $index = $key + 1;
+            $messages['cellphonenum.'.$key.'.required'] = "شماره تلفن آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('cellphonenum') as $key => $value) {
+            $index = $key + 1;
+            $messages['cellphonenum.'.$key.'.regex'] = "شماره تلفن آدرس ".$index." اشتباه می باشد";
+        }
+
+        foreach ($request->get('zipcode') as $key => $value) {
+            $index = $key + 1;
+            $messages['zipcode.'.$key.'.digits'] = "کد پستی آدرس ".$index." اشتباه می باشد";
+        }
+
+        $this->validate($request, $rules, $messages);
 
         $costumer = new Costumer();
 
@@ -76,12 +101,20 @@ class CostumerController extends Controller
         $costumer->last_name = $request->input('lastname');
         $costumer->description = $request->input('description');
         $costumer->national_code = $request->input('nationalcode');
-        $costumer->cell_phone_num = $request->input('cellphonenum');
         $costumer->phone_num = $request->input('phonenum');
-        $costumer->zip_code = $request->input('zipcode');
-        $costumer->address = $request->input('address');
 
         $costumer->save();
+
+        for ($i=0; $i < count($request->get('address')); $i++) { 
+            $address = new Address();
+
+            $address['name'] = $request->get('addressname')[$i];
+            $address['phone_number'] = $request->get('cellphonenum')[$i];
+            $address['zip_code'] = $request->get('zipcode')[$i];
+            $address['address'] = $request->get('address')[$i];
+
+            $costumer->addresses()->save($address);
+        }
 
         return redirect('/costumers')->with('success', 'مشتری با موفقیت ذخیره شد');
     }
@@ -119,26 +152,54 @@ class CostumerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
-            'cellphonenum' => 'required|regex:/(09)[0-9]{9}/',
             'nationalcode' => 'digits_between:10,11|unique:costumers,national_code,'.$id,
-            'zipcode' => 'nullable|digits:10',
-            'address' => 'required',
-        ],[
+            'addressname.*' => 'required',
+            'address.*' => 'required',
+            'cellphonenum.*' => 'nullable|regex:/(09)[0-9]{9}/',
+            'zipcode.*' => 'nullable|digits:10',
+        ];
+
+        $messages = [
             
             'firstname.required' => 'پر کردن نام لازم است',
             'lastname.required' => 'پر کردن نام خانوادگی لازم است',
-            'zipcode.digits' => 'در صورت وارد کردن کد پستی باید ده رقم باشد',
             'nationalcode.digits_between' => 'کد (شناسه) ملی باید 10 یا 11 رقم باشد',
             'nationalcode.unique' => 'کد (شناسه) ملی تکراری می باشد',
-            'cellphonenum.required' => 'وارد کردن شماره تلفن همراه ضروری می باشد.',
-            'cellphonenum.regex' => 'شماره تلفن وارد شده صحیح نمی باشد',
-            'address.required' => 'وارد کردن آدرس ضروری می باشد',
-        ]);
+        ];
+
+        foreach ($request->get('addressname') as $key => $value) {
+            $index = $key + 1;
+            $messages['addressname.'.$key.'.required'] = "عنوان آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('address') as $key => $value) {
+            $index = $key + 1;
+            $messages['address.'.$key.'.required'] = "آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('cellphonenum') as $key => $value) {
+            $index = $key + 1;
+            $messages['cellphonenum.'.$key.'.required'] = "شماره تلفن آدرس ".$index." را پر کنید";
+        }
+
+        foreach ($request->get('cellphonenum') as $key => $value) {
+            $index = $key + 1;
+            $messages['cellphonenum.'.$key.'.regex'] = "شماره تلفن آدرس ".$index." اشتباه می باشد";
+        }
+
+        foreach ($request->get('zipcode') as $key => $value) {
+            $index = $key + 1;
+            $messages['zipcode.'.$key.'.digits'] = "کد پستی آدرس ".$index." اشتباه می باشد";
+        }
+
+        $this->validate($request, $rules, $messages);
 
         $costumer = Costumer::find($id);
+
+        dd($costumer);
 
         $this->authorize('update', $costumer);
 
@@ -146,12 +207,20 @@ class CostumerController extends Controller
         $costumer->last_name = $request->input('lastname');
         $costumer->description = $request->input('description');
         $costumer->national_code = $request->input('nationalcode');
-        $costumer->cell_phone_num = $request->input('cellphonenum');
         $costumer->phone_num = $request->input('phonenum');
-        $costumer->zip_code = $request->input('zipcode');
-        $costumer->address = $request->input('address');
 
-        $costumer->save();
+        // $costumer->save();
+
+        for ($i=0; $i < count($request->get('address')); $i++) { 
+            $address = new Address();
+
+            $address['name'] = $request->get('addressname')[$i];
+            $address['phone_number'] = $request->get('cellphonenum')[$i];
+            $address['zip_code'] = $request->get('zipcode')[$i];
+            $address['address'] = $request->get('address')[$i];
+
+            $costumer->addresses()->save($address);
+        }
 
         return redirect('/costumers')->with('success', 'مشتری با موفقیت ویرایش شد');
     }
@@ -165,8 +234,15 @@ class CostumerController extends Controller
     public function destroy(Request $request)
     {
         $this->authorize('delete', Costumer::find($request->input('costumers')[0]));
-
-        Costumer::destroy($request->input('costumers'));
+        
+        foreach ($request->input('costumers') as $id) {
+            $costumer = Costumer::find($id);
+            if (Costumer::destroy($id)) {
+                foreach ($costumer->addresses as $address) {
+                    $address->destroy();
+                }
+            }
+        }
 
         return redirect('/costumers')->with('success', 'مشتری ها با موفقیت حذف شدند');
     }
