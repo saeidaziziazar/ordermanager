@@ -218,6 +218,8 @@ class CostumerController extends Controller
         for ($i=0; $i < count($request->get('address')); $i++) { 
             $address = new Address();
 
+            if ($request->get('default') == $i) $address['is_default'] = 1;
+
             $address['name'] = $request->get('addressname')[$i];
             $address['phone_number'] = $request->get('cellphonenum')[$i];
             $address['zip_code'] = $request->get('zipcode')[$i];

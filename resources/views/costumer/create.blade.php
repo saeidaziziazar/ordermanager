@@ -65,7 +65,7 @@
                 <div class="address">            
                     @if(old('addressname'))
                         @for ($i = 0; $i < count(old('addressname')); $i++)
-                            <div style="display:grid;grid-template-columns:30px auto">
+                            <div id="address-block" style="display:grid;grid-template-columns:30px auto">
                                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                                 <div class="row" style="margin-bottom:15px">
                                     <div class="col col-2">
@@ -87,7 +87,7 @@
                             </div>
                         @endfor
                     @else
-                        <div style="display:grid;grid-template-columns:30px auto">
+                        <div id="address-block" style="display:grid;grid-template-columns:30px auto">
                             <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                             <div class="row" style="margin-bottom:15px">
                                 <div class="col col-2">

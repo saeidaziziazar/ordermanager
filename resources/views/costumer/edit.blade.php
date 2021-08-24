@@ -65,7 +65,7 @@
                 <div class="address">            
                     @if(old('addressname'))
                         @for ($i = 0; $i < count(old('addressname')); $i++)
-                            <div style="display:grid;grid-template-columns:30px auto">
+                            <div id="address-block" style="display:grid;grid-template-columns:30px auto">
                                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                                 <div class="row" style="margin-bottom:15px">
                                     <div class="col col-2">
@@ -88,7 +88,7 @@
                         @endfor
                     @else
                         @foreach ($costumer->addresses as $address)
-                            <div style="display:grid;grid-template-columns:30px auto">
+                            <div id="address-block" style="display:grid;grid-template-columns:30px auto">
                                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                                 <div class="row" style="margin-bottom:15px">
                                     <input type="hidden" name="id[]"  value="{{ $address->id }}">
@@ -105,7 +105,11 @@
                                         <input type="text" name="zipcode[]" class="form-control" value="{{ $address->zip_code }}" placeholder="کد پستی">
                                     </div>
                                     <div class="col col-1">
-                                        <input class="center" type="radio" name="default">
+                                        <input class="center" type="radio" name="default" value="{{ $loop->index }}"
+                                            @if ($address->is_default == 1)
+                                                checked
+                                            @endif
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -128,8 +132,11 @@
 
 @section('scripts')
     <script>
-        var str = 
-            `<div style="display:grid;grid-template-columns:30px auto">
+        function appendAddressToList() {
+            $val = document.querySelectorAll("#address-block").length;
+            
+            var str = 
+            `<div id="address-block" style="display:grid;grid-template-columns:30px auto">
                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                 <div class="row" style="margin-bottom: 15px">
                     <div class="col col-2">
@@ -145,18 +152,19 @@
                         <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
                     </div>
                     <div class="col col-1">
-                        <input class="center" type="radio" name="default">
+                        <input class="center" type="radio" name="default" value="${$val}">
                     </div>
                 </div>
             </div>`;
 
-            function appendAddressToList() {
-                var x = document.querySelector("#add-address");
-                x.insertAdjacentHTML('beforebegin', str);
-            }
+            var x = document.querySelector("#add-address");
+            x.insertAdjacentHTML('beforebegin', str);
+        }
 
-            function removeAddressFromList(e) {
-                e.target.parentNode.remove();
-            }
+        
+
+        function removeAddressFromList(e) {
+            e.target.parentNode.remove();
+        }
     </script>
 @endsection
