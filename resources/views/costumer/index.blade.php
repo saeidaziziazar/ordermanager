@@ -56,8 +56,6 @@
                             <td>{{ $costumer->description }}</td>
                             <td>{{ $costumer->national_code }}</td>
                             <td>{{ $costumer->phone_num }}</td>
-                            <!-- <td>{{ $costumer->zip_code }}</td>
-                            <td>{{ $costumer->address }}</td> -->
                         </tr>
                     @endforeach
                     <ul class="actions">

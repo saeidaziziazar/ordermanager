@@ -118,6 +118,9 @@
             </div>
             {!! Form::hidden('_method', 'PUT') !!}
             {!! Form::submit('ذخیره', ['class' => 'btn btn-primary']); !!}
+            <a href="{{ url($url) }}">
+                {!! Form::button('ایجاد حواله', ['class' => 'btn btn-success']); !!}
+            </a>
             </div>
         {!! Form::close() !!}
     </div>

@@ -140,7 +140,9 @@ class CostumerController extends Controller
 
         $this->authorize('update', $costumer);
 
-        return view('costumer.edit')->with('costumer', $costumer);
+        $url = 'orders/create/' . $costumer->id;
+
+        return view('costumer.edit')->with(['costumer' => $costumer, 'url' => $url]);
     }
 
     /**
@@ -210,7 +212,7 @@ class CostumerController extends Controller
         foreach ($costumer->addresses as $address) {
             $address->destroy($address->id);
         }
-
+        
         $costumer->save();
 
         for ($i=0; $i < count($request->get('address')); $i++) { 
