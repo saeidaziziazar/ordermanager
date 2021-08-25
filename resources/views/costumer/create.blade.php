@@ -81,7 +81,11 @@
                                         <input type="text" name="zipcode[]" class="form-control" value="{{old('zipcode')[$i]}}" placeholder="کد پستی">
                                     </div>
                                     <div class="col col-1">
-                                        <input class="center" type="radio" name="default">
+                                        <input class="center" type="radio" name="default" value="{{ $i }}"
+                                            @if (old('default') == $i)
+                                                checked
+                                            @endif
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +107,7 @@
                                     <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
                                 </div>
                                 <div class="col col-1">
-                                    <input class="center" type="radio" name="default">
+                                    <input class="center" type="radio" name="default" value="0">
                                 </div>
                             </div>
                         </div>
@@ -122,8 +126,11 @@
 
 @section('scripts')
     <script>
-        var str = 
-            `<div style="display:grid;grid-template-columns:30px auto">
+        function appendAddressToList() {
+            $val = document.querySelectorAll("#address-block").length;
+            
+            var str = 
+            `<div id="address-block" style="display:grid;grid-template-columns:30px auto">
                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                 <div class="row" style="margin-bottom: 15px">
                     <div class="col col-2">
@@ -139,23 +146,18 @@
                         <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
                     </div>
                     <div class="col col-1">
-                        <input class="center" type="radio" name="default">
+                        <input class="center" type="radio" name="default" value="${$val}">
                     </div>
                 </div>
             </div>`;
 
-            function appendAddressToList() {
-                var x = document.querySelector("#add-address");
-                x.insertAdjacentHTML('beforebegin', str);
-            }
+            var x = document.querySelector("#add-address");
+            x.insertAdjacentHTML('beforebegin', str);
+        }
 
-            function removeAddressFromList(e) {
-                e.target.parentNode.remove();
-            }
+        function removeAddressFromList(e) {
+            e.target.parentNode.remove();
+        }
     </script>
 @endsection
-<!-- @if(old('addressname'))
-    @foreach (old('addressname') as $name)
-        {{ $name }}<br>
-    @endforeach
-@endif -->
+

@@ -81,7 +81,11 @@
                                         <input type="text" name="zipcode[]" class="form-control" value="{{old('zipcode')[$i]}}" placeholder="کد پستی">
                                     </div>
                                     <div class="col col-1">
-                                        <input class="center" type="radio" name="default">
+                                        <input class="center" type="radio" name="default"
+                                            @if (old('default') == $i)
+                                                checked
+                                            @endif
+                                        >
                                     </div>
                                 </div>
                             </div>
