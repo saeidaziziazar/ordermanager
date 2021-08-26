@@ -21,7 +21,7 @@
                     <div class="input-group-append">
                       <span class="input-group-text">مالک<span>
                     </div>
-                    {!! Form::select('owner', $owners, null , ['class' => 'custom-select']); !!}
+                    {!! Form::select('owner', $owners, null , ['class' => ['custom-select', 'form-control']]); !!}
                 </div>
             </div>
 
@@ -39,7 +39,17 @@
                     <div class="input-group-append">
                       <span class="input-group-text">مشتری<span>
                     </div>
-                    {!! Form::select('costumer', $costumers, $costumer , ['class' => 'custom-select']); !!}
+                    {!! Form::hidden('costumer_id', $costumer->id) !!}
+                    {!! Form::text('costumer_name', $costumer->first_name . " " . $costumer->last_name, ['class' => 'form-control', 'readonly']); !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append">
+                      <span class="input-group-text">آدرس<span>
+                    </div>
+                    {!! Form::select('address', $addresses, $default_address, ['class' => ['form-control']]); !!}
                 </div>
             </div>
 

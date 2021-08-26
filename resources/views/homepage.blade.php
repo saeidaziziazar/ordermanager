@@ -79,9 +79,6 @@
 
         @if (Auth::check())
         <ul>
-            @can('create', App\Order::class)
-                <li><a href="{{ url('orders/create') }}">حواله جدید</a></li>
-            @endcan
             @can('viewAny', App\Order::class)
                 <li><a href="{{ url('orders') }}">لیست حواله ها</a></li>
             @endif

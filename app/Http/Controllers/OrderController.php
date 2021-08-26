@@ -102,19 +102,20 @@ class OrderController extends Controller
         $formatted_cos = [];
         $formatted_tran = [];
         $formatted_owners = [];
+        $formatted_addresses = ['بدون آدرس'];
+        $default_address = 0;
 
-        $costumers = Costumer::all();
+        $costumer = Costumer::find($costumer_id);
         $trans = Transportation::all();
         $owners = Owner::all();
-
-        if (is_null($costumer_id)) $costumer_id = $costumers[0]->id;
 
         foreach($trans as $tran) {
             $formatted_tran[$tran->id] = $tran->name;
         }
 
-        foreach ($costumers as $costumer) {
-            $formatted_cos[$costumer->id] = $costumer->first_name . ' ' . $costumer->last_name . ' | ' . $costumer->national_code;
+        foreach ($costumer->addresses as $address) {
+            $formatted_addresses[$address->id] = $address->name . ' | ' . $address->zip_code . ' | ' . $address->phone_number;
+            if ($address->is_default == 1) $default_address = $address->id;
         }
 
         foreach ($owners as $owner) {
@@ -125,7 +126,7 @@ class OrderController extends Controller
 
         $formatted_date = $date->format('d').$date->format('m').$date->getYear();
 
-        return view('order.create')->with(['costumers' => $formatted_cos, 'costumer' => $costumer_id, 'trans' => $formatted_tran, 'owners' => $formatted_owners, 'date' => $formatted_date]);
+        return view('order.create')->with(['costumer' => $costumer, 'addresses' =>$formatted_addresses, 'default_address' => $default_address, 'trans' => $formatted_tran, 'owners' => $formatted_owners, 'date' => $formatted_date]);
     }
 
     /**
@@ -136,6 +137,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->authorize('create', Order::class);
 
         if (Auth::user()->year) {
@@ -156,7 +158,7 @@ class OrderController extends Controller
         $this->validate($request,
             [
                 'ordernum' => 'required|unique:orders,order_num,null,id,year_id,'.$year->id,
-                'costumer' => 'required',
+                'costumer_name' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
                 'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/|gte:start|lte:end',
@@ -184,7 +186,8 @@ class OrderController extends Controller
         $order->amount = $request->input('amount');
         $order->description = $request->input('description');
         $order->date = $date;
-        $order->costumer_id = $request->input('costumer');
+        $order->costumer_id = $request->input('costumer_id');
+        $order->address_id = $request->input('address');
         $order->transportation_id = $request->input('transport');
         $order->owner_id = $request->input('owner');
         $order->year_id = $year->id;
@@ -248,7 +251,6 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $year = Order::find($id)->year;
-        // dd($year_id);
         $this->authorize('update', Order::class);
         $this->validate($request,
             [

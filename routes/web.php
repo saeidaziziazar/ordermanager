@@ -33,7 +33,7 @@ Route::delete('users', 'UserController@destroy')->middleware(['auth', 'active',]
 
 Route::resource('costumers', 'CostumerController', ['except' => ['show', 'destroy']]);
 Route::resource('transportations', 'TransportationController', ['except' => ['show', 'destroy']]);
-Route::resource('orders', 'OrderController', ['except' => ['destroy', 'index', 'store']]);
+Route::resource('orders', 'OrderController', ['except' => ['destroy', 'index', 'store', 'create']]);
 Route::resource('owners', 'OwnerController', ['except' => ['show', 'destroy']]);
 Route::resource('users', 'UserController', ['except' => ['show', 'destroy']]);
 
