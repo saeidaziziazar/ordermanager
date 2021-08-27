@@ -114,7 +114,7 @@ class OrderController extends Controller
         }
 
         foreach ($costumer->addresses as $address) {
-            $formatted_addresses[$address->id] = $address->name . ' | ' . $address->zip_code . ' | ' . $address->phone_number;
+            $formatted_addresses[$address->id] = $address->name . ' | ' . $address->zip_code . ' | ' . $address->phone_number . ' | ' . $address->address;
             if ($address->is_default == 1) $default_address = $address->id;
         }
 
@@ -137,7 +137,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->authorize('create', Order::class);
 
         if (Auth::user()->year) {
@@ -187,7 +186,8 @@ class OrderController extends Controller
         $order->description = $request->input('description');
         $order->date = $date;
         $order->costumer_id = $request->input('costumer_id');
-        $order->address_id = $request->input('address');
+        if ($request->input('address') == 0) $order->address_id = null;
+        else $order->address_id = $request->input('address');
         $order->transportation_id = $request->input('transport');
         $order->owner_id = $request->input('owner');
         $order->year_id = $year->id;
@@ -217,8 +217,8 @@ class OrderController extends Controller
         $formatted_cos = [];
         $formatted_tran = [];
         $formatted_owners = [];
+        $formatted_addresses = ['بدون آدرس'];
 
-        $costumers = Costumer::all();
         $trans = Transportation::all();
         $owners = Owner::all();
 
@@ -226,19 +226,20 @@ class OrderController extends Controller
             $formatted_tran[$tran->id] = $tran->name;
         }
 
-        foreach ($costumers as $costumer) {
-            $formatted_cos[$costumer->id] = $costumer->first_name . ' ' . $costumer->last_name . ' | ' . $costumer->national_code;
-        }
-
         foreach ($owners as $owner) {
             $formatted_owners[$owner->id] = $owner->name . ' | ' . $owner->national_id . ' | ' . $owner->zip_code;
+        }
+
+        foreach ($order->costumer->addresses as $address) {
+            $formatted_addresses[$address->id] = $address->name . ' | ' . $address->zip_code . ' | ' . $address->phone_number . ' | ' . $address->address;
+            if ($address->is_default == 1) $default_address = $address->id;
         }
 
         $date = Jalalian::forge($order->date)->format('%Y/%m/%d');
 
         $order->date = $date;
 
-        return view('order.edit')->with(['order' => $order, 'costumers' => $formatted_cos, 'trans' => $formatted_tran, 'owners' => $formatted_owners]);
+        return view('order.edit')->with(['order' => $order, 'addresses' => $formatted_addresses, 'trans' => $formatted_tran, 'owners' => $formatted_owners]);
     }
 
     /**

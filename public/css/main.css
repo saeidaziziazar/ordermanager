@@ -181,11 +181,13 @@ body article {
 body article div.content {
   width: 88%;
   height: 88%;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: absolute;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
+  padding: 8px;
 }
 body article .table-sm th, body article .table-sm td {
   padding: 0.5rem !important;
@@ -199,6 +201,7 @@ body article .address {
   position: relative;
   overflow: scroll;
   margin-bottom: 10px;
+  overflow: hidden;
 }
 body article .address .col {
   padding-right: 8px !important;
@@ -218,6 +221,9 @@ body article .delete {
   padding: 5px;
   margin: 0 -10px 0 5px;
   cursor: pointer;
+}
+body article .address-select option {
+  overflow: hidden;
 }
 body footer {
   grid-column: 1/span 14;

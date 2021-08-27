@@ -39,7 +39,17 @@
                     <div class="input-group-append">
                       <span class="input-group-text">مشتری<span>
                     </div>
-                    {!! Form::select('costumer', $costumers, $order->costumer->id , ['class' => 'custom-select']); !!}
+                    {!! Form::hidden('costumer_id', $order->costumer->id) !!}
+                    {!! Form::text('costumer_name', $order->costumer->first_name . " " . $order->costumer->last_name, ['class' => 'form-control', 'readonly']); !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append">
+                      <span class="input-group-text">آدرس<span>
+                    </div>
+                    {!! Form::select('address', $addresses, $order->address_id, ['class' => ['form-control'], 'size' => 4]); !!}
                 </div>
             </div>
 

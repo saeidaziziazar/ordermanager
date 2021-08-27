@@ -49,7 +49,7 @@
                     <div class="input-group-append">
                       <span class="input-group-text">آدرس<span>
                     </div>
-                    {!! Form::select('address', $addresses, $default_address, ['class' => ['form-control']]); !!}
+                    {!! Form::select('address', $addresses, $default_address, ['class' => ['form-control', 'address-select'], 'size' => 4]); !!}
                 </div>
             </div>
 
