@@ -10,6 +10,10 @@ class Order extends Model
         return $this->belongsTo('App\Costumer', 'costumer_id');
     }
 
+    public function address() {
+        return $this->belongsTo('App\Address', 'address_id');
+    }
+
     public function transportation() {
         return $this->belongsTo('App\Transportation', 'transportation_id');
     }

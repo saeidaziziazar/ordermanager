@@ -1,12 +1,65 @@
 @extends('homepage')
 
-@section('title')
-    <h5 class="title">شماره حواله {{ $order->order_num }}</h5>
-@endsection
-
 @section('content')
     <div class="content">    
         <br>
+        <h6>اطلاعات حواله</h6>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text">شماره حواله<span>
+                        </div>
+                        {!! Form::text('ordernum', $order->order_num, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text">تاریخ حواله<span>
+                        </div>
+                        {!! Form::text('ordernum', $date, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text">باربری<span>
+                        </div>
+                        {!! Form::text('ordernum', $order->transportation->name, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text">مقدار حواله<span>
+                        </div>
+                        {!! Form::text('ordernum', $order->amount, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text">توضیحات<span>
+                        </div>
+                        {!! Form::text('ordernum', $order->description, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+            </div>
+        </div>
         <h6>اطلاعات فرستنده</h6>
         <div class="form-group">
             <div class="input-group">
@@ -63,11 +116,19 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-append">
-                          <span class="input-group-text">کد پستی<span>
+                          <span class="input-group-text">شماره تماس<span>
                         </div>
-                        {!! Form::text('ordernum', $order->costumer->zip_code, ['class' => 'form-control', 'readonly']); !!}
+                        {!! Form::text('ordernum', $order->costumer->phone_num, ['class' => 'form-control', 'readonly']); !!}
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-append">
+                <span class="input-group-text">آدرس<span>
+                </div>
+                {!! Form::text('ordernum', $order->address->address, ['class' => 'form-control', 'readonly']); !!}
             </div>
         </div>
         <div class="row">
@@ -75,9 +136,9 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-append">
-                          <span class="input-group-text">شماره تماس<span>
+                          <span class="input-group-text">کد پستی<span>
                         </div>
-                        {!! Form::text('ordernum', $order->costumer->phone_num, ['class' => 'form-control', 'readonly']); !!}
+                        {!! Form::text('ordernum', $order->address->zip_code, ['class' => 'form-control', 'readonly']); !!}
                     </div>
                 </div>
             </div>
@@ -87,17 +148,9 @@
                         <div class="input-group-append">
                           <span class="input-group-text">شماره همراه<span>
                         </div>
-                            {!! Form::text('ordernum', $order->costumer->cell_phone_num, ['class' => 'form-control', 'readonly']); !!}
+                            {!! Form::text('ordernum', $order->address->phone_number, ['class' => 'form-control', 'readonly']); !!}
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-append">
-                  <span class="input-group-text">آدرس<span>
-                </div>
-                {!! Form::text('ordernum', $order->costumer->address, ['class' => 'form-control', 'readonly']); !!}
             </div>
         </div>
     </div>

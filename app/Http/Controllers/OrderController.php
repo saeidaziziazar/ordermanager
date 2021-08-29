@@ -85,9 +85,11 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
 
+        $date = Jalalian::forge($order->date)->format('%Y/%m/%d');
+        
         $this->authorize('view', Order::class);
 
-        return view('order.view')->with('order', $order);
+        return view('order.view')->with(['order' => $order, 'date' => $date]);
     }
 
     /**
@@ -218,6 +220,9 @@ class OrderController extends Controller
         $formatted_tran = [];
         $formatted_owners = [];
         $formatted_addresses = ['بدون آدرس'];
+        $address_id = 0;
+
+        if ($order->address_id) $address_id = $order->address_id;
 
         $trans = Transportation::all();
         $owners = Owner::all();
@@ -239,7 +244,7 @@ class OrderController extends Controller
 
         $order->date = $date;
 
-        return view('order.edit')->with(['order' => $order, 'addresses' => $formatted_addresses, 'trans' => $formatted_tran, 'owners' => $formatted_owners]);
+        return view('order.edit')->with(['order' => $order, 'addresses' => $formatted_addresses, 'address_id' =>$address_id, 'trans' => $formatted_tran, 'owners' => $formatted_owners]);
     }
 
     /**
@@ -251,12 +256,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $year = Order::find($id)->year;
         $this->authorize('update', Order::class);
         $this->validate($request,
             [
                 'ordernum' => 'required|unique:orders,order_num,'. $id .',id,year_id,'.$year->id,
-                'costumer' => 'required',
+                'costumer_name' => 'required',
                 'transport' => 'required',
                 'amount' => 'required',
                 'date' => 'required|regex:/[0-9]{4}\/[0-9]{2}\/[0-9]{2}/',
@@ -284,7 +290,9 @@ class OrderController extends Controller
         $order->amount = $request->input('amount');
         $order->description = $request->input('description');
         $order->date = $date;
-        $order->costumer_id = $request->input('costumer');
+        $order->costumer_id = $request->input('costumer_id');
+        if ($request->input('address') == 0) $order->address_id = null;
+        else $order->address_id = $request->input('address');
         $order->transportation_id = $request->input('transport');
         $order->owner_id = $request->input('owner');
     
