@@ -608,8 +608,6 @@ class OrderController extends Controller
         $year_start = $year->start;
         $year_end = $year->end;
 
-        // dd($year_start, $year_end);
-
         if ($start) {
             $start = (new Jalalian(substr($request->input('start'),0,4), substr($request->input('start'),5,2), substr($request->input('start'),8,2)))->toCarbon()->toDateString();
 
@@ -635,91 +633,91 @@ class OrderController extends Controller
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['date', '<=', $end],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();;
                 break;
             case ($start == null && $end == null && $transporter == null && $owner != null):
                 $orders = Order::where([
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start == null && $end == null && $transporter != null && $owner == null):
                 $orders = Order::where([
                     ['transportation_id', '=', $transporter],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;  
             case ($start == null && $end == null && $transporter != null && $owner != null):
                 $orders = Order::where([
                     ['owner_id', '=', $owner],
                     ['transportation_id', '=', $transporter],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;  
             case ($start == null && $end != null && $transporter == null && $owner == null):
                 $orders = Order::where([
                     ['date', '<=', $end],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;    
             case ($start == null && $end != null && $transporter == null && $owner != null):
                 $orders = Order::where([
                     ['date', '<=', $end],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break; 
             case ($start == null && $end != null && $transporter != null && $owner == null):
                 $orders = Order::where([
                     ['date', '<=', $end],
                     ['transportation_id', '=', $transporter],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;        
             case ($start == null && $end != null && $transporter != null && $owner != null):
                 $orders = Order::where([
                     ['date', '<=', $end],
                     ['transportation_id', '=', $transporter],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end == null && $transporter == null && $owner == null):
                 $orders = Order::where([
                     ['date', '>=', $start],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end == null && $transporter == null && $owner != null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end == null && $transporter != null && $owner == null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['transportation_id', '=', $transporter],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end == null && $transporter != null && $owner != null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['transportation_id', '=', $transporter],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end != null && $transporter == null && $owner == null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['date', '<=', $end],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end != null && $transporter == null && $owner != null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['date', '<=', $end],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end != null && $transporter != null && $owner == null):
                 $orders = Order::where([
                     ['date', '>=', $start],
                     ['date', '<=', $end],
                     ['transportation_id', '=', $transporter],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
             case ($start != null && $end != null && $transporter != null && $owner != null):
                 $orders = Order::where([
@@ -727,7 +725,7 @@ class OrderController extends Controller
                     ['date', '<=', $end],
                     ['transportation_id', '=', $transporter],
                     ['owner_id', '=', $owner],
-                ])->whereIn('is_certain', $certain)->orderBy('order_num', 'desc')->get();
+                ])->whereIn('is_certain', $certain)->orderBy('is_viewed', 'asc')->orderBy('order_num', 'desc')->get();
                 break;
         }
 

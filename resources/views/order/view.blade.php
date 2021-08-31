@@ -123,36 +123,47 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-append">
-                <span class="input-group-text">آدرس<span>
+        @if ($order->address)
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append">
+                    <span class="input-group-text">آدرس<span>
+                    </div>
+                    {!! Form::text('ordernum', $order->address->address, ['class' => 'form-control', 'readonly']); !!}
                 </div>
-                {!! Form::text('ordernum', $order->address->address, ['class' => 'form-control', 'readonly']); !!}
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-append">
-                          <span class="input-group-text">کد پستی<span>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                            <span class="input-group-text">کد پستی<span>
+                            </div>
+                            {!! Form::text('ordernum', $order->address->zip_code, ['class' => 'form-control', 'readonly']); !!}
                         </div>
-                        {!! Form::text('ordernum', $order->address->zip_code, ['class' => 'form-control', 'readonly']); !!}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                            <span class="input-group-text">شماره همراه<span>
+                            </div>
+                                {!! Form::text('ordernum', $order->address->phone_number, ['class' => 'form-control', 'readonly']); !!}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-append">
-                          <span class="input-group-text">شماره همراه<span>
-                        </div>
-                            {!! Form::text('ordernum', $order->address->phone_number, ['class' => 'form-control', 'readonly']); !!}
+        @else
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-append">
+                    <span class="input-group-text">آدرس<span>
                     </div>
+                    {!! Form::text('ordernum', 'حواله فاقد آدرس می باشد.', ['class' => 'form-control', 'readonly']); !!}
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
 @endsection
