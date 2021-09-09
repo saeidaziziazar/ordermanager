@@ -731,4 +731,4 @@ class OrderController extends Controller
 
         return $orders;
     }
-}
+};
