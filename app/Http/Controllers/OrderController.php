@@ -14,6 +14,7 @@ use Morilog\Jalali\Jalalian;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Validation\Rule;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 class OrderController extends Controller
 {
@@ -403,15 +404,21 @@ class OrderController extends Controller
     }
 
     public function report(Request $request) {
-        $date = Jalalian::now()->format('%Y/%m/%d');
+        $fpdf = new FPDF();
+        $fpdf->AddPage();
+        $fpdf->SetFont('Courier', 'B', 18);
+        $fpdf->Cell(50, 25, 'Hello World!');
+        $fpdf->Output('I', 'گزارش.pdf', true);
+        // $date = Jalalian::now()->format('%Y/%m/%d');
 
-        $orders = [];
 
-        foreach($request->input('orders') as $order_num) {
-            array_push($orders, Order::find($order_num));
-        }
+        // $orders = [];
 
-        return view('order.report')->with(['orders' => $orders, 'date' => $date]);
+        // foreach($request->input('orders') as $order_num) {
+        //     array_push($orders, Order::find($order_num));
+        // }
+
+        // return view('order.report')->with(['orders' => $orders, 'date' => $date]);
     }
 
 

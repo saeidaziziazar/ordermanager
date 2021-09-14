@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6db6f83649286611789e03171e97ecdfe2db3ae1',
+        'reference' => '43707d15ced445ffacd0a8bc85a6c0f1d47b70a2',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -17,6 +17,15 @@
             'install_path' => __DIR__ . '/../beberlei/assert',
             'aliases' => array(),
             'reference' => '5e721d7e937ca3ba2cdec1e1adf195f9e5188372',
+            'dev_requirement' => false,
+        ),
+        'codedge/laravel-fpdf' => array(
+            'pretty_version' => '1.5',
+            'version' => '1.5.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../codedge/laravel-fpdf',
+            'aliases' => array(),
+            'reference' => '6596b7be2de7f143abbe1de6472bbb5a8d22672f',
             'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
@@ -355,7 +364,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6db6f83649286611789e03171e97ecdfe2db3ae1',
+            'reference' => '43707d15ced445ffacd0a8bc85a6c0f1d47b70a2',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(

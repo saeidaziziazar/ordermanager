@@ -43,8 +43,12 @@ Route::get('logout', 'LoginController@logout');
 
 
 
-Route::get('/test', function() {
-    $orders = App\Order::all();
-    return view('home')->with('orders', $orders);
-});
+// Route::get('/test', function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
+
+//     $fpdf->AddPage();
+//     $fpdf->SetFont('Courier', 'B', 18);
+//     $fpdf->Cell(50, 25, 'Hello World!');
+//     $fpdf->Output('D', 'doc.pdf');
+
+// });
 
