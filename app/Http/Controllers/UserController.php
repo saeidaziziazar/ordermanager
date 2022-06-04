@@ -186,11 +186,18 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->authorize('all', User::find($request->input('users')[0]));
-
-        User::destroy($request->input('users'));
-
-        return redirect('/users')->with('success', ' کاربران با موفقیت حذف شدند');
+        if (!$request->input('users')) {
+            return redirect('/users')->with('fail', 'حداقل یک  مورد باید انتخاب شود.');
+        } else {
+            $this->authorize('all', User::find($request->input('users')[0]));
+            try {
+                User::destroy($request->input('users'));
+            } catch (\Illuminate\Database\QueryException $ًQexception) {
+                return redirect('/users')->with('fail', 'امکان حذف کاربران وجود ندارد');
+            }
+            
+            return redirect('/users')->with('success', 'مشتری ها با موفقیت حذف شدند');
+        }
     }
 
     public function acount(Request $request) 

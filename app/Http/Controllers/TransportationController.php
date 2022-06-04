@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transportation;
+use \Illuminate\Database\QueryException;
 
 class TransportationController extends Controller
 {
@@ -137,10 +138,17 @@ class TransportationController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->authorize('delete', Transportation::find($request->input('trans')[0]));
-
-        Transportation::destroy($request->input('trans'));
-
-        return redirect('/transportations')->with('success', 'حواله ها با موفقیت حذف شد');
+        if (!$request->input('trans')) {
+            return redirect('/transportations')->with('fail', 'حداقل یک  مورد باید انتخاب شود.');
+        } else {
+            $this->authorize('delete', Transportation::find($request->input('trans')[0]));
+            try {
+                Transportation::destroy($request->input('trans'));
+            } catch (\Illuminate\Database\QueryException $ًQexception) {
+                return redirect('/transportations')->with('fail', 'برای این باربری ها قبلا حواله ثبت شده است و امکان حذف وجود ندارد');
+            }
+            
+            return redirect('/transportations')->with('success', 'باربری ها با موفقیت حذف شدند');
+        }
     }
 }

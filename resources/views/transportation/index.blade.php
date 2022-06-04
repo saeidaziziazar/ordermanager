@@ -51,7 +51,7 @@
                     @endforeach
                     <ul class="actions">
                         @can('delete', $trans[0])
-                            <li><a href="#" onclick="deleteTrans(true)">حذف حواله ها</a></li>
+                            <li><a href="#" onclick="deleteTrans(true)">حذف باربری ها</a></li>
                         @endcan 
                     </ul>
 

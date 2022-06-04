@@ -62,11 +62,17 @@
             <div class="form-group">
                 <h6>آدرس ها</h6>
                 <div>
-                <div class="address">            
+                <div class="address">           
                     @if(old('addressname'))
                         @for ($i = 0; $i < count(old('addressname')); $i++)
                             <div id="address-block" style="display:grid;grid-template-columns:30px auto">
-                                <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                                @if (old('disabled')[$i] == true)
+                                    <img class="delete" src="{{ asset('icons/delete.svg') }}" style="opacity:0.2;cursor: not-allowed;" alt="با این آدرس حواله در سیستم ثبت شده است و امکان حذف وجود ندارد">
+                                @else
+                                    <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                                @endif
+                                <input type="hidden" name="id[]"  value="{{old('id')[$i]}}">
+                                <input type="hidden" name="disabled[]"  value="{{old('disabled')[$i]}}">
                                 <div class="row" style="margin-bottom:15px">
                                     <div class="col col-2">
                                         <input type="text" name="addressname[]" class="form-control" value="{{old('addressname')[$i]}}" placeholder="عنوان">
@@ -82,7 +88,7 @@
                                     </div>
                                     <div class="col col-1">
                                         <input class="center" type="radio" name="default"
-                                            @if (old('default') == $i)
+                                            @if (old('default')[0] == $i)
                                                 checked
                                             @endif
                                         >
@@ -91,26 +97,31 @@
                             </div>
                         @endfor
                     @else
-                        @foreach ($costumer->addresses as $address)
+                        @foreach ($addresses as $address)
                             <div id="address-block" style="display:grid;grid-template-columns:30px auto">
-                                <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                                @if ($address["disabled"] == true)
+                                    <img class="delete" src="{{ asset('icons/delete.svg') }}" style="opacity:0.2;cursor: not-allowed;" alt="با این آدرس حواله در سیستم ثبت شده است و امکان حذف وجود ندارد">
+                                @else
+                                    <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
+                                @endif
                                 <div class="row" style="margin-bottom:15px">
-                                    <input type="hidden" name="id[]"  value="{{ $address->id }}">
+                                    <input type="hidden" name="id[]"  value="{{ $address['id'] }}">
+                                    <input type="hidden" name="disabled[]"  value="{{ $address['disabled'] }}">
                                     <div class="col col-2">
-                                        <input type="text" name="addressname[]" class="form-control" value="{{ $address->name }}" placeholder="عنوان">
+                                        <input type="text" name="addressname[]" class="form-control" value="{{ $address['name'] }}" placeholder="عنوان">
                                     </div>
                                     <div class="col col-5">
-                                        <input type="text" name="address[]" class="form-control" value="{{ $address->address }}" placeholder="آدرس">
+                                        <input type="text" name="address[]" class="form-control" value="{{ $address['address'] }}" placeholder="آدرس">
                                     </div>
                                     <div class="col col-2">
-                                        <input type="text" name="cellphonenum[]" class="form-control" value="{{ $address->phone_number }}" placeholder="شماره همراه">
+                                        <input type="text" name="cellphonenum[]" class="form-control" value="{{ $address['phone_number'] }}" placeholder="شماره همراه">
                                     </div>
                                     <div class="col col-2">
-                                        <input type="text" name="zipcode[]" class="form-control" value="{{ $address->zip_code }}" placeholder="کد پستی">
+                                        <input type="text" name="zipcode[]" class="form-control" value="{{ $address['zip_code'] }}" placeholder="کد پستی">
                                     </div>
                                     <div class="col col-1">
-                                        <input class="center" type="radio" name="default" value="{{ $loop->index }}"
-                                            @if ($address->is_default == 1)
+                                        <input class="center" type="radio" name="default[]" value="{{ $loop->index }}"
+                                            @if ($address["is_default"] == 1)
                                                 checked
                                             @endif
                                         >
@@ -143,6 +154,7 @@
             `<div id="address-block" style="display:grid;grid-template-columns:30px auto">
                 <img class="delete" src="{{ asset('icons/delete.svg') }}" onclick="removeAddressFromList(event)">
                 <div class="row" style="margin-bottom: 15px">
+                    <input type="hidden" name="id[]"  value="">
                     <div class="col col-2">
                         <input type="text" name="addressname[]" class="form-control" placeholder="عنوان">
                     </div>
@@ -156,7 +168,7 @@
                         <input type="text" name="zipcode[]" class="form-control" placeholder="کد پستی">
                     </div>
                     <div class="col col-1">
-                        <input class="center" type="radio" name="default" value="${$val}">
+                        <input class="center" type="radio" name="default[]" value="${$val}">
                     </div>
                 </div>
             </div>`;

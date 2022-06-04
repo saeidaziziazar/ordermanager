@@ -60,7 +60,7 @@
                     @endforeach
                     <ul class="actions">
                          @can('delete', $costumers[0])
-                            <li><a href="#" onclick="deleteCostumers(true)">حذف حواله ها</a></li>
+                            <li><a href="#" onclick="deleteCostumers(true)">حذف مشتری ها</a></li>
                         @endcan
                     </ul>
 

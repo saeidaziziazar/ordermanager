@@ -149,8 +149,13 @@ class OwnerController extends Controller
             return redirect('/owners')->with('fail', 'حداقل یک  مورد باید انتخاب شود.');
         } else {
             $this->authorize('delete', Owner::find($request->input('owners')[0]));
-            Owner::destroy($request->input('owners'));
-            return redirect('/owners')->with('success', 'مشتری ها با موفقیت حذف شدند');
+            try {
+                Owner::destroy($request->input('owners'));
+            } catch (\Illuminate\Database\QueryException $ًQexception) {
+                return redirect('/owners')->with('fail', 'برای این مالک ( مالکین ) قبلا حواله ثبت شده است و امکان حذف وجود ندارد');
+            }
+            
+            return redirect('/owners')->with('success', 'مالکین با موفقیت حذف شدند');
         }
     }
 }
