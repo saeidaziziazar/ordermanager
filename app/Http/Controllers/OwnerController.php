@@ -107,7 +107,6 @@ class OwnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->input('name'));
         $this->validate($request, [
             'name' => 'required|unique:owners,name,'.$id,
             'nationalcode' => 'required|digits_between:10,11|unique:owners,national_id,'.$id,

@@ -67,7 +67,13 @@
 
             ?>
             <div class="financial_year">
-                <h6>سال مالی</h6>
+                @can('all', App\User::class, App\Year::class)
+                    <a href="{{ url('years') }}">
+                        <h6>سال مالی</h6>
+                    </a>
+                @else 
+                    <h6>سال مالی</h6>
+                @endcan
 
                 {!! Form::open(['action' => 'YearController@changeUserYear', 'method' => 'POST']) !!}
                     {!! Form::select('year', $formatted_year, $defult, ['class' => 'form-control', 'style' => 'width:fit-content;margin:0 10px 0 10px', 'onChange' => 'this.form.submit()']); !!}

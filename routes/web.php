@@ -29,12 +29,14 @@ Route::delete('orders', 'OrderController@destroy')->middleware(['auth', 'active'
 Route::delete('costumers', 'CostumerController@destroy')->middleware(['auth', 'active',]);
 Route::delete('transportations', 'TransportationController@destroy')->middleware(['auth', 'active',]);
 Route::delete('owners', 'OwnerController@destroy')->middleware(['auth', 'active']);
+Route::delete('years', 'YearController@destroy')->middleware(['auth', 'active']);
 Route::delete('users', 'UserController@destroy')->middleware(['auth', 'active',]);
 
 Route::resource('costumers', 'CostumerController', ['except' => ['show', 'destroy']]);
 Route::resource('transportations', 'TransportationController', ['except' => ['show', 'destroy']]);
 Route::resource('orders', 'OrderController', ['except' => ['destroy', 'index', 'store', 'create']]);
 Route::resource('owners', 'OwnerController', ['except' => ['show', 'destroy']]);
+Route::resource('years', 'YearController', ['except' => ['show']]);
 Route::resource('users', 'UserController', ['except' => ['show', 'destroy']]);
 
 Route::get('login', 'LoginController@loginForm')->name('login');

@@ -9,11 +9,13 @@ use App\Costumer;
 use App\Owner;
 use App\Transportation;
 use App\User;
+use App\Year;
 use App\Policies\OrderPolicy;
 use App\Policies\CostumerPolicy;
 use App\Policies\OwnerPolicy;
 use App\Policies\TransportationPolicy;
 use App\Policies\UserPolicy;
+use App\Policies\YearPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         Owner::class => OwnerPolicy::class,
         Transportation::class => TransportationPolicy::class,
         User::class => UserPolicy::class,
+        Year::class => YearPolicy::class,
     ];
 
     /**
