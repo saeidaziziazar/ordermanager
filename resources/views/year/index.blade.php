@@ -50,7 +50,7 @@
                         </tr>
                     @endforeach
                     <ul class="actions">
-                        <li><a href="{{ url('years/create') }}">سال مالی جدید</a></li>
+                        <a class="btn btn-primary" href="{{ url('years/create') }}">سال مالی جدید</a>
                     </ul>
                     <div style="display:flex">
                         <div id="search-status"></div>

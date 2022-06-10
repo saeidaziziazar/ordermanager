@@ -72,6 +72,18 @@ class YearController extends Controller
         $startdate = (new Jalalian(substr($request->input('startdate'),0,4), substr($request->input('startdate'),5,2), substr($request->input('startdate'),8,2)))->toCarbon()->toDateString();
 
         $enddate = (new Jalalian(substr($request->input('enddate'),0,4), substr($request->input('enddate'),5,2), substr($request->input('enddate'),8,2)))->toCarbon()->toDateString();
+        
+        if ($startdate < $enddate) {
+            $years = Year::all();
+            
+            foreach ($years as $year) {
+                if ($startdate < $year->end && $enddate > $year->start) {
+                    return back()->with('fail', 'تاریخ انتخابی با سال مال دیگری تداخل دارد')->withInput();
+                }
+            }
+        } else {
+            return back()->with('fail', 'تاریخ شروع باید کوچکتر از تاریخ پایان باشد')->withInput();
+        }
 
         $year = new Year();
 
@@ -140,7 +152,20 @@ class YearController extends Controller
 
         $enddate = (new Jalalian(substr($request->input('enddate'),0,4), substr($request->input('enddate'),5,2), substr($request->input('enddate'),8,2)))->toCarbon()->toDateString();
 
-        // dd($request->all(), $startdate, $enddate);
+        if ($startdate < $enddate) {
+            $conflict = false;
+            $years = Year::all();
+            
+            foreach ($years as $year) {
+
+                if ($year->id != $id && ($startdate < $year->end && $enddate > $year->start)) {
+                    return back()->with('fail', 'تاریخ انتخابی با سال مال دیگری تداخل دارد')->withInput();
+                }
+            }
+        } else {
+            return back()->with('fail', 'تاریخ شروع باید کوچکتر از تاریخ پایان باشد')->withInput();
+        }
+
         $year = Year::find($id);
 
         $year->name = $request->input('name');

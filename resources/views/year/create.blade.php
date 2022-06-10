@@ -18,11 +18,15 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        @if(session('fail'))
+            <div class="alert alert-danger">{{ session('fail') }}</div>
+        @endif
+
         {!! Form::open(['action' => 'YearController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-append">
-                      <span class="input-group-text">نام<span>
+                    <span class="input-group-text">نام<span>
                     </div>
                     {!! Form::text('name', '', ['class' => 'form-control']); !!}
                 </div>
